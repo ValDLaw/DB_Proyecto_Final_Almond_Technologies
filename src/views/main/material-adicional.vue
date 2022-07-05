@@ -36,7 +36,7 @@
   <section class="hero is-info is-small">
     <div class="hero-body">
       <div class="container has-text-centered">
-        <p class="title">Pizarras virtuales</p>
+        <p class="title">Material adicional</p>
       </div>
     </div>
   </section>

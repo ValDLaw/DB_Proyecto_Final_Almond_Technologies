@@ -6,7 +6,7 @@
     <router-link to="/modelo-de-clases">Modelo de clases </router-link>|
     <router-link to="/tips-main">Tips </router-link>|
     <router-link to="/material-adicional">Material </router-link>|
-    <router-link to="/herramientas-digitales">Tools </router-link>|
+    <router-link to="/herramientas-digitales">Herramientas </router-link>|
     <router-link to="/juegos-main">Juegos </router-link>|
     <router-link to="/about">Salir </router-link>
   </nav>
