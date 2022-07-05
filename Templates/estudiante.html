@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block content %}
+    
+
+<div class="column is-4 is-offset-4">
+    <h3 class="subtitle">{{current_user.nombres}} {{current_user.apellidos}}</h3>
+        <div class="titulo">
+            <h2 class="title">Cursos matriculados</h2>
+        </div>
+        <br>
+        <div class="box">
+            {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                    {% for msg in messages %}
+                    <div class='notification is-danger'>
+                        <p>{{msg}}</p>
+                    </div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+            <div>
+                {% for curso in cursos_matriculados%}
+                <p><a href="/matriculado/{{curso}}">
+                    {{curso}}
+                </a></p>
+                {% endfor %}
+            </div>
+            <br>
+            <div class="button">
+                <h5><a href="{{ url_for('matricular') }}">
+                    Matricularse en nuevo curso
+                </a></h5>
+            </div>
+            <div class="button">
+                <h5><a href="{{ url_for('abandonar') }}">
+                    Abandonar un curso
+                </a></h5>
+            </div>
+        </div>
+</div>
+{% endblock %}

@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block content %}
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            {% for msg in messages %}
+                <p>{{msg}}</p>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+
+    <p>Material complementario del curso</p>
+    {% for material in material_extra%}
+        <a href="{{ material.link }}">
+            {{material.tema}}
+        </a>
+    {% endfor %}
+
+{% endblock %}

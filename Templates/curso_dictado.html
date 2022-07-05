@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="column is-4 is-offset-4">
+    <h3 class = "subtitle">{{current_user.nombres}} {{current_user.apellidos}}</h3>
+    <h2 class = "title">Alumnos - {{curso}}</h2>
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                {% for msg in messages %}
+                <div class='notification'>
+                    <p>{{msg}}</p>
+                </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+        <div class = "box" style="float:left;">
+            <ul> 
+                <h4 class="label">CÓDIGO</h4>
+                {% for alumno_c in alumnos_codigos%}
+                    <p>{{alumno_c}}</p>
+                {% endfor %}
+            </ul>
+        </div>
+        <div class = "box" style="float:left;">
+            <ul>
+                <h4 class="label">APELLIDOS</h4>
+                {% for alumno_a in alumnos_apellidos%}
+                    <p>{{alumno_a}}</p>
+                {% endfor %}
+            </ul>
+        </div>
+        <div class = "box" style="float:left;">
+            <ul>
+                <h4 class="label">NOMBRES</h4>
+                {% for alumno_n in alumnos_nombres%}
+                    <p>{{alumno_n}}</p>
+                {% endfor %}
+            </ul>
+        </div>
+</div>
+    
+{% endblock %}

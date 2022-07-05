@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block content %}
+<title>Cuenta</title>
+<div class="column is-4 is-offset-4">
+    <h3 class = "subtitle">{{current_user.nombres}} {{current_user.apellidos}}</h3>
+    <h2 class = "title">Cursos Dictados</h2>
+    <div class="box">
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                {% for msg in messages %}
+                <div class='notification is-danger'>
+                    <p>{{msg}}</p>
+                </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+        {% for curso in cursos_dictados%}
+            <p class = "label"><a href="/dictado/{{curso.nombre}}">
+                {{curso.nombre}}
+            </a></p>
+        {% endfor %}
+    </div>
+</div> 
+
+{% endblock %}

@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="column is-4 is-offset-4">
+    <h3 class="title">Crear Cuenta</h3>
+    <div class="box">
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            {% for msg in messages %}
+                <div class='notification'>
+                    <p>{{msg}}</p>
+                </div>
+            {% endfor %}
+        {% endif %}
+        {% endwith %} 
+        <form action="#" method="POST"> <!-- input de los datos para crear cuenta -->
+            <div class="field">
+                <div class="control">
+                    <input required class="input is-large" type="number" name="id" min=200000000 placeholder="Código">
+                </div>
+            </div>
+            <div class="field">
+                <div class="control">
+                    <input required class="input is-large" type="text" name="nombres" placeholder="Nombres">
+                </div>
+            </div>
+            <div class="field">
+                <div class="control">
+                    <input required class="input is-large" type="text" name="apellidos" placeholder="Apellidos">
+                </div>
+            </div>
+            <div class="field">
+                <div class="control">
+                    <select class="input is-large" name="rol">
+                        <option value="E">Estudiante</option>
+                        <option value="P">Profesor</option>
+                    </select>
+                </div>
+            </div>
+            <div class="field">
+                <div class="control">
+                    <input required class="input is-large" type="email" name="email" placeholder="abc@centroeducativo.pe">
+                </div>
+            </div>
+            <div class="field">
+                <div class="control">
+                    <input required class="input is-large" type="password" name="password" placeholder="Contraseña">
+                </div>
+            </div>
+            <div class="field">
+                <div class="control">
+                    <input class="button is-block is-info is-large is-fullwidth" type="submit" value="Crear Cuenta"/>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+{% endblock%}

@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% with messages = get_flashed_messages() %}
+        {% if messages %}
+            {% for msg in messages %}
+            <div class='notification is-danger'>
+                <p>{{msg}}</p>
+            </div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+    {% block content %}
+<div class="column is-4 is-offset-4">
+    <h3 class="subtitle">{{current_user.nombres}} {{current_user.apellidos}}</h3>
+        <div class="titulo">
+            <h4 class = "title">Seleccione el curso que desea abandonar</h4>
+        </div>
+        <br>
+        <div class="box">
+            {% for curso in cursos_disponibles %}
+            <p><a href="/abandonar/{{curso.nombre}}">
+                {{curso.nombre}}
+            </a></p>
+            {% endfor %}
+        </div>
+        <div class="button">
+            <h5><a href="/user">
+                Regresar
+            </a></h5>
+        </div>
+</div>
+
+{% endblock %}
