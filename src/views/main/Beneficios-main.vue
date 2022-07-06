@@ -197,7 +197,7 @@
 
           <a href="https://www.perueduca.pe/#/home">
             <span class="button is-link modal-button" data-target="modal-image2"
-              >Ver tutoriales</span
+              >Ver capacitaciones</span
             >
           </a>
         </div>
@@ -231,7 +231,7 @@
 
           <a href="https://colegiodeprofesoresdelperu.org">
             <span class="button is-link modal-button" data-target="modal-image2"
-              >Ver tutoriales</span
+              >Ver capacitaciones</span
             >
           </a>
         </div>

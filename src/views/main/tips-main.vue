@@ -36,7 +36,7 @@
   <section class="hero is-info is-small">
     <div class="hero-body">
       <div class="container has-text-centered">
-        <p class="title">Juegos interactivos</p>
+        <p class="title">Tips</p>
       </div>
     </div>
   </section>
@@ -72,7 +72,7 @@
               <span
                 class="button is-link modal-button"
                 data-target="modal-image2"
-                >Ir a juegos</span
+                >Ir a tips</span
               >
             </a>
           </div>
@@ -104,7 +104,7 @@
           </p>
           <a href="https://www.mundoprimaria.com">
             <span class="button is-link modal-button" data-target="modal-image2"
-              >Ir a juegos</span
+              >Ir a tips</span
             >
           </a>
         </div>
@@ -134,7 +134,7 @@
           </p>
           <a href="https://education.minecraft.net/en-us">
             <span class="button is-link modal-button" data-target="modal-image2"
-              >Ir a juego</span
+              >Ir a tips</span
             >
           </a>
         </div>
