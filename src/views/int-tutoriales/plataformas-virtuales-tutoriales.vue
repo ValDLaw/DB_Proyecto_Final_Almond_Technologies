@@ -36,7 +36,7 @@
   <section class="hero is-info is-small">
     <div class="hero-body">
       <div class="container has-text-centered">
-        <p class="title">Herramientas Digitales</p>
+        <p class="title">Plataformas virtuales tutoriales</p>
       </div>
     </div>
   </section>
@@ -56,23 +56,21 @@
       <div class="card-image">
         <figure class="image is-4by3">
           <img
-            src="https://tic.cinvestav.mx/Portals/0/EasyDNNnews/96/img-Microsoft-Whiteboard-ion.png"
+            src="https://www.insightplatforms.com/wp-content/uploads/2021/03/Microsoft-Teams-Logo-Square-Insight-Platforms.png"
             alt="Placeholder image"
           />
         </figure>
       </div>
       <div class="card-content">
         <div class="content">
-          <h4>Microsoft Whiteboard.</h4>
+          <h4>Microsoft teams</h4>
           <p>
-            Whiteboard es la pizarra digital de Microsoft, para la colaboración
-            creativa de ideas y contenido. La aplicación está diseñada para
-            equipos que necesitan idear, realizar, y trabajar juntos y de manera
-            simultánea, tanto en persona como remotamente, y a través de
-            múltiples dispositivos
+            Microsoft Teams es una plataforma unificada de comunicación y
+            colaboración, que facilita la interacción entre colaboradores,
+            conocido especialmente por ser un centro de trabajo basado en chats.
           </p>
           <a
-            href="https://www.youtube.com/playlist?list=PLlM0tKd2OBZU_6mMX0J7ETI0Qj-uhSGTs"
+            href="https://www.youtube.com/playlist?list=PLlM0tKd2OBZWEswsYYOVFBteewbC8htFK"
           >
             <span class="button is-link modal-button" data-target="modal-image2"
               >Ver tutoriales</span
@@ -91,23 +89,23 @@
       <div class="card-image">
         <figure class="image is-4by3">
           <img
-            src="https://tic.cinvestav.mx/Portals/0/EasyDNNnews/96/img-Microsoft-Whiteboard-ion.png"
+            src="https://1000marcas.net/wp-content/uploads/2021/08/Google-Classroom-Logo.jpg"
             alt="Placeholder image"
           />
         </figure>
       </div>
       <div class="card-content">
         <div class="content">
-          <h4>Microsoft Whiteboard.</h4>
+          <h4>Google Classroom.</h4>
           <p>
-            Whiteboard es la pizarra digital de Microsoft, para la colaboración
-            creativa de ideas y contenido. La aplicación está diseñada para
-            equipos que necesitan idear, realizar, y trabajar juntos y de manera
-            simultánea, tanto en persona como remotamente, y a través de
-            múltiples dispositivos
+            En Google Classroom se pueden crear y gestionar clases, tareas y
+            calificaciones online sin necesidad de usar papel. Añadir materiales
+            a las tareas, como vídeos de YouTube, encuestas de Formularios de
+            Google y otros elementos de Google Drive. Enviar comentarios
+            directos y en tiempo real.
           </p>
           <a
-            href="https://www.youtube.com/playlist?list=PLlM0tKd2OBZU_6mMX0J7ETI0Qj-uhSGTs"
+            href="https://www.youtube.com/playlist?list=PLlM0tKd2OBZVJiEtzX8jLm6RDlUN0i0Ir"
           >
             <span class="button is-link modal-button" data-target="modal-image2"
               >Ver tutoriales</span
@@ -127,23 +125,22 @@
       <div class="card-image">
         <figure class="image is-4by3">
           <img
-            src="https://tic.cinvestav.mx/Portals/0/EasyDNNnews/96/img-Microsoft-Whiteboard-ion.png"
+            src="http://www.articaonline.com/wp-content/uploads/2016/09/Moodle-1.png"
             alt="Placeholder image"
           />
         </figure>
       </div>
       <div class="card-content">
         <div class="content">
-          <h4>Microsoft Whiteboard.</h4>
+          <h4>Moodle</h4>
           <p>
-            Whiteboard es la pizarra digital de Microsoft, para la colaboración
-            creativa de ideas y contenido. La aplicación está diseñada para
-            equipos que necesitan idear, realizar, y trabajar juntos y de manera
-            simultánea, tanto en persona como remotamente, y a través de
-            múltiples dispositivos
+            Moodle es una plataforma de aprendizaje diseñada para proporcionarle
+            a educadores, administradores y estudiantes un sistema integrado
+            único, robusto y seguro para crear ambientes de aprendizaje
+            personalizados.
           </p>
           <a
-            href="https://www.youtube.com/playlist?list=PLlM0tKd2OBZU_6mMX0J7ETI0Qj-uhSGTs"
+            href="https://www.youtube.com/playlist?list=PLlM0tKd2OBZV5VzePkDhVR5DG52r7fiAd"
           >
             <span class="button is-link modal-button" data-target="modal-image2"
               >Ver tutoriales</span
@@ -162,23 +159,21 @@
       <div class="card-image">
         <figure class="image is-4by3">
           <img
-            src="https://tic.cinvestav.mx/Portals/0/EasyDNNnews/96/img-Microsoft-Whiteboard-ion.png"
+            src="https://is1-ssl.mzstatic.com/image/thumb/Purple116/v4/d9/c6/c9/d9c6c991-afda-0702-544e-f935ef358483/AppIcon-0-0-1x_U007emarketing-0-0-0-7-0-0-sRGB-0-0-0-GLES2_U002c0-512MB-85-220-0-0.png/1200x630wa.png"
             alt="Placeholder image"
           />
         </figure>
       </div>
       <div class="card-content">
         <div class="content">
-          <h4>Microsoft Whiteboard.</h4>
+          <h4>Edmodo</h4>
           <p>
-            Whiteboard es la pizarra digital de Microsoft, para la colaboración
-            creativa de ideas y contenido. La aplicación está diseñada para
-            equipos que necesitan idear, realizar, y trabajar juntos y de manera
-            simultánea, tanto en persona como remotamente, y a través de
-            múltiples dispositivos
+            Edmodo es una red social virtual que permite a profesores:
+            administrar clases, exámenes, compartir contenido, recursos y
+            comunicarse con padres y alumnos de forma directa y gratuita
           </p>
           <a
-            href="https://www.youtube.com/playlist?list=PLlM0tKd2OBZU_6mMX0J7ETI0Qj-uhSGTs"
+            href="https://www.youtube.com/playlist?list=PLlM0tKd2OBZWc8hIg6r3g_bT0NqTmzDvF"
           >
             <span class="button is-link modal-button" data-target="modal-image2"
               >Ver tutoriales</span
