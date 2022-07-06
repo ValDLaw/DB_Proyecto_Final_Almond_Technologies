@@ -2,92 +2,40 @@
   <div class="hello">
     <h1>{{ msg }}</h1>
     <p>
-      For a guide and recipes on how to configure / customize this project,<br />
-      check out the
-      <a href="https://cli.vuejs.org" target="_blank" rel="noopener"
-        >vue-cli documentation</a
-      >.
+      “La tecnologia es importante, pero lo unico que realmente importa es lo
+      que hacemos con ella”
     </p>
-    <h3>Installed CLI Plugins</h3>
+    <h3>Mision</h3>
     <ul>
       <li>
-        <a
-          href="https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-babel"
-          target="_blank"
-          rel="noopener"
-          >babel</a
-        >
-      </li>
-      <li>
-        <a
-          href="https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-router"
-          target="_blank"
-          rel="noopener"
-          >router</a
-        >
-      </li>
-      <li>
-        <a
-          href="https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-eslint"
-          target="_blank"
-          rel="noopener"
-          >eslint</a
-        >
+        <p>
+          “La misión de Almond Technologies es informar y capacitar a
+          estudiantes y profesores con el objetivo de tener una mayor eficiencia
+          en el uso de los recursos TIC para que de esta manera se pueda mejorar
+          la calidad de educación desde el medio por el que se brindan las
+          clases.”
+        </p>
       </li>
     </ul>
-    <h3>Essential Links</h3>
+    <h3>Vision</h3>
     <ul>
       <li>
-        <a href="https://vuejs.org" target="_blank" rel="noopener">Core Docs</a>
-      </li>
-      <li>
-        <a href="https://forum.vuejs.org" target="_blank" rel="noopener"
-          >Forum</a
-        >
-      </li>
-      <li>
-        <a href="https://chat.vuejs.org" target="_blank" rel="noopener"
-          >Community Chat</a
-        >
-      </li>
-      <li>
-        <a href="https://twitter.com/vuejs" target="_blank" rel="noopener"
-          >Twitter</a
-        >
-      </li>
-      <li>
-        <a href="https://news.vuejs.org" target="_blank" rel="noopener">News</a>
+        <p>
+          “La visión de nuestra empresa es llegar a tener una educación con
+          altos estándares de calidad mediante el aprovechamiento de los
+          recursos digitales para que de esta manera se incrementen los
+          conocimientos de la población en este ámbito.”
+        </p>
       </li>
     </ul>
-    <h3>Ecosystem</h3>
+    <h3>Feedback</h3>
     <ul>
       <li>
-        <a href="https://router.vuejs.org" target="_blank" rel="noopener"
-          >vue-router</a
-        >
-      </li>
-      <li>
-        <a href="https://vuex.vuejs.org" target="_blank" rel="noopener">vuex</a>
-      </li>
-      <li>
         <a
-          href="https://github.com/vuejs/vue-devtools#vue-devtools"
+          href="https://forms.gle/wG9LrsiYMqDT5wVh9"
           target="_blank"
           rel="noopener"
-          >vue-devtools</a
-        >
-      </li>
-      <li>
-        <a href="https://vue-loader.vuejs.org" target="_blank" rel="noopener"
-          >vue-loader</a
-        >
-      </li>
-      <li>
-        <a
-          href="https://github.com/vuejs/awesome-vue"
-          target="_blank"
-          rel="noopener"
-          >awesome-vue</a
+          >Dar Feedback</a
         >
       </li>
     </ul>

@@ -1,7 +1,7 @@
 <template>
   <div class="home">
-    <img alt="Vue logo" src="../assets/almond.png" />
-    <HelloWorld msg="Welcome to Almond Tech world's" />
+    <img alt="Vue logo" src="../assets/Logo.png" />
+    <HelloWorld msg="Welcome to Almond Education Platform" />
   </div>
 </template>
 
