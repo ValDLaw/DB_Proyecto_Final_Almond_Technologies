@@ -53,7 +53,7 @@
         <div class="card-image">
           <figure class="image is-4by3">
             <img
-              src="https://cdn-icons-png.flaticon.com/512/2965/2965289.png"
+              src="https://i1.wp.com/arbolabc.nyc3.cdn.digitaloceanspaces.com/Enlazanos/logo_lulu.png?w=442&ssl=1"
               alt="Placeholder image"
               class="modal-button"
               data-target="modal-image2"
@@ -62,21 +62,19 @@
         </div>
         <div class="card-content">
           <div class="content">
-            <h4>Jamboard</h4>
+            <h4>Arbol ABC</h4>
             <p>
-              Jamboard es una pantalla inteligente que te permite extraer con
-              rapidez imágenes de una búsqueda en Google, guardar el trabajo en
-              la nube automáticamente, usar la herramienta de reconocimiento de
-              formas y escritura a mano fácil de leer, y dibujar con una pluma
+              Arbol ABC es un mundo imaginario donde los pequeños ayudan a los
+              personajes para completar los juegos. Este enfoque hace que el
+              aprendizaje sea amigable y accesible para los niños creando un
+              contexto que conecta las diferentes áreas del conocimiento
             </p>
 
-            <a
-              href="https://www.youtube.com/playlist?list=PLlM0tKd2OBZXj6YjNxDTI8IfT8LPMB3Zd"
-            >
+            <a href="https://arbolabc.com">
               <span
                 class="button is-link modal-button"
                 data-target="modal-image2"
-                >Ver tutoriales</span
+                >Ir a juegos</span
               >
             </a>
           </div>
@@ -94,26 +92,23 @@
       <div class="card-image">
         <figure class="image is-4by3">
           <img
-            src="https://tic.cinvestav.mx/Portals/0/EasyDNNnews/96/img-Microsoft-Whiteboard-ion.png"
+            src="https://static.comunicae.com/photos/notas/1122778/1437465971_Mundo_Primaria.png"
             alt="Placeholder image"
           />
         </figure>
       </div>
       <div class="card-content">
         <div class="content">
-          <h4>Microsoft Whiteboard.</h4>
+          <h4>Mundo primaria.</h4>
           <p>
-            Whiteboard es la pizarra digital de Microsoft, para la colaboración
-            creativa de ideas y contenido. La aplicación está diseñada para
-            equipos que necesitan idear, realizar, y trabajar juntos y de manera
-            simultánea, tanto en persona como remotamente, y a través de
-            múltiples dispositivos
+            Mundo Primaria es un lugar de aprendizaje y entretenimiento. Como
+            está dirigido principalmente a niños y niñas entre 3 y 12 años, los
+            contenidos relacionados con las asignaturas del colegio aparecen
+            organizados por cursos, áreas temáticas y edades.
           </p>
-          <a
-            href="https://www.youtube.com/playlist?list=PLlM0tKd2OBZU_6mMX0J7ETI0Qj-uhSGTs"
-          >
+          <a href="https://www.mundoprimaria.com">
             <span class="button is-link modal-button" data-target="modal-image2"
-              >Ver tutoriales</span
+              >Ir a juegos</span
             >
           </a>
         </div>
@@ -129,26 +124,22 @@
       <div class="card-image">
         <figure class="image is-4by3">
           <img
-            src="https://www.edu.xunta.es/espazoAbalar/sites/espazoAbalar/files/openboard_0.jpg"
+            src="https://asociacioncultural.gsdeducacion.com/wp-content/uploads/2019/05/a-look-at-minecraft-education-edition-004-1024x576-945x532.jpg"
             alt="Placeholder image"
           />
         </figure>
       </div>
       <div class="card-content">
         <div class="content">
-          <h4>Openboard</h4>
+          <h4>Minecraft education</h4>
           <p>
-            Openboard permite simular en el escritorio del computador una
-            pizarra virtual que se puede compartir con los estudiantes. Permite
-            visualizar un tablero en blanco, insertar fondos con cuadrículas,
-            cargar imágenes y videos, utilizar aplicaciones integradas como para
-            trabajar con mapas, reglas, cronómetro, lápiz etc.
+            Minecraft education es una plataforma de aprendizaje basada en
+            juegos que desarrolla habilidades, da rienda suelta a la creatividad
+            e involucra a los estudiantes a la colaboración.
           </p>
-          <a
-            href="https://www.youtube.com/playlist?list=PLlM0tKd2OBZWf1CLMl95LFEk4CiYfSfMz"
-          >
+          <a href="https://education.minecraft.net/en-us">
             <span class="button is-link modal-button" data-target="modal-image2"
-              >Ver tutoriales</span
+              >Ir a juego</span
             >
           </a>
         </div>
