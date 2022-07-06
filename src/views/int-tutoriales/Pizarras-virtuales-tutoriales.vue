@@ -195,7 +195,7 @@
   <div
     class="column is-4 modal-button"
     data-target="modal-image"
-    style="margin-top: -675px; width: 520px; margin-left: 580px"
+    style="margin-top: -655px; width: 520px; margin-left: 580px"
   >
     <div class="card is-shady">
       <div class="card-image">
@@ -232,7 +232,7 @@
   <div
     class="column is-4 modal-button"
     data-target="modal-image"
-    style="margin-top: -662px; width: 520px; margin-left: 1120px"
+    style="margin-top: -642px; width: 520px; margin-left: 1120px"
   >
     <div class="card is-shady">
       <div class="card-image">
@@ -267,7 +267,7 @@
   <div
     class="column is-4 modal-button"
     data-target="modal-image"
-    style="margin-top: 60px"
+    style="margin-top: 20px"
   >
     <div class="card is-shady">
       <div class="card-image">
@@ -339,7 +339,7 @@
   <div
     class="column is-4 modal-button"
     data-target="modal-image"
-    style="margin-top: -662px; width: 520px; margin-left: 1120px"
+    style="margin-top: -642px; width: 520px; margin-left: 1120px"
   >
     <div class="card is-shady">
       <div class="card-image">

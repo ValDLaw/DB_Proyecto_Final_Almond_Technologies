@@ -83,7 +83,7 @@
   <!-- post 2-->
   <div
     class="columns features"
-    style="margin-top: -664px; width: 520px; margin-left: 840px"
+    style="margin-top: -624px; width: 520px; margin-left: 840px"
   >
     <div class="card is-shady">
       <div class="card-image">

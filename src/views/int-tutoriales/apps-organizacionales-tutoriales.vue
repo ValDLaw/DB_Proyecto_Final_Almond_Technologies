@@ -88,7 +88,7 @@
   <!-- post 2-->
   <div
     class="columns features"
-    style="margin-top: -725px; width: 520px; margin-left: 580px"
+    style="margin-top: -680px; width: 530px; margin-left: 580px"
   >
     <div class="card is-shady">
       <div class="card-image">
@@ -122,7 +122,7 @@
   <!-- post 3-->
   <div
     class="columns features"
-    style="margin-top: -665px; width: 520px; margin-left: 1120px"
+    style="margin-top: -620px; width: 520px; margin-left: 1130px"
   >
     <div class="card is-shady">
       <div class="card-image">
@@ -158,7 +158,7 @@
   <!-- post 4-->
   <div
     class="columns features"
-    style="margin-top: 10px; width: 520px; margin-left: 300px"
+    style="margin-top: 30px; width: 520px; margin-left: 300px"
   >
     <div class="card is-shady">
       <div class="card-image">
@@ -192,7 +192,7 @@
   <!-- post 5-->
   <div
     class="columns features"
-    style="margin-top: -664px; width: 520px; margin-left: 840px"
+    style="margin-top: -615px; width: 520px; margin-left: 840px"
   >
     <div class="card is-shady">
       <div class="card-image">

@@ -53,7 +53,7 @@
         <div class="card-image">
           <figure class="image is-4by3">
             <img
-              src="http://www.humanistasguatemala.org/wp-content/uploads/2021/03/zoom-logo.png"
+              src="https://1000marcas.net/wp-content/uploads/2021/07/Zoom-logo.jpg"
               alt="Placeholder image"
               class="modal-button"
               data-target="modal-image2"
@@ -186,7 +186,7 @@
   <!-- post 5-->
   <div
     class="columns features"
-    style="margin-top: -664px; width: 520px; margin-left: 840px"
+    style="margin-top: -634px; width: 520px; margin-left: 840px"
   >
     <div class="card is-shady">
       <div class="card-image">
