@@ -71,13 +71,11 @@
             simultánea, tanto en persona como remotamente, y a través de
             múltiples dispositivos
           </p>
-          <a
-            href="https://www.youtube.com/playlist?list=PLlM0tKd2OBZU_6mMX0J7ETI0Qj-uhSGTs"
-          >
+          <router-link to="/plataformas-virtuales-hd">
             <span class="button is-link modal-button" data-target="modal-image2"
-              >Ver tutoriales</span
+              >Ver aplicaciones</span
             >
-          </a>
+          </router-link>
         </div>
       </div>
     </div>
@@ -106,13 +104,11 @@
             simultánea, tanto en persona como remotamente, y a través de
             múltiples dispositivos
           </p>
-          <a
-            href="https://www.youtube.com/playlist?list=PLlM0tKd2OBZU_6mMX0J7ETI0Qj-uhSGTs"
-          >
+          <router-link to="/apps-temas-especificos-ma">
             <span class="button is-link modal-button" data-target="modal-image2"
-              >Ver tutoriales</span
+              >Ver aplicaciones</span
             >
-          </a>
+          </router-link>
         </div>
       </div>
     </div>
@@ -142,13 +138,11 @@
             simultánea, tanto en persona como remotamente, y a través de
             múltiples dispositivos
           </p>
-          <a
-            href="https://www.youtube.com/playlist?list=PLlM0tKd2OBZU_6mMX0J7ETI0Qj-uhSGTs"
-          >
+          <router-link to="/apps-temas-especificos-ma">
             <span class="button is-link modal-button" data-target="modal-image2"
-              >Ver tutoriales</span
+              >Ver aplicaciones</span
             >
-          </a>
+          </router-link>
         </div>
       </div>
     </div>
@@ -177,13 +171,11 @@
             simultánea, tanto en persona como remotamente, y a través de
             múltiples dispositivos
           </p>
-          <a
-            href="https://www.youtube.com/playlist?list=PLlM0tKd2OBZU_6mMX0J7ETI0Qj-uhSGTs"
-          >
+          <router-link to="/apps-temas-especificos-ma">
             <span class="button is-link modal-button" data-target="modal-image2"
-              >Ver tutoriales</span
+              >Ver aplicaciones</span
             >
-          </a>
+          </router-link>
         </div>
       </div>
     </div>
