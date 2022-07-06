@@ -109,7 +109,6 @@
             tareas, o de manera individual.
           </p>
           <a href="https://quizizz.com/?fromBrowserLoad=true">
-            >
             <span class="button is-link modal-button" data-target="modal-image2"
               >Ver tutoriales</span
             >
