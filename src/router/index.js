@@ -98,8 +98,8 @@ const routes = [
   },
   //2
   {
-    path: "/pizarras-virtuales-tutoriales",
-    name: "pizarras-virtuales-tutoriales",
+    path: "/pizarras-virtuales-hd",
+    name: "pizarras-virtuales-hd",
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
@@ -110,8 +110,8 @@ const routes = [
   },
   //3
   {
-    path: "/pizarras-virtuales-tutoriales",
-    name: "pizarras-virtuales-tutoriales",
+    path: "/plataformas-virtuales-hd",
+    name: "plataformas-virtuales-hd",
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
@@ -122,8 +122,8 @@ const routes = [
   },
   //4
   {
-    path: "/pizarras-virtuales-tutoriales",
-    name: "pizarras-virtuales-tutoriales",
+    path: "/videoconferencias-hd",
+    name: "videoconferencias-hd",
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.

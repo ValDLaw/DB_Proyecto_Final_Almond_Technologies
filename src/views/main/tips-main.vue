@@ -53,7 +53,7 @@
         <div class="card-image">
           <figure class="image is-4by3">
             <img
-              src="https://images.samsung.com/is/image/samsung/assets/global/about-us/brand/logo/360_197_1.png?$FB_TYPE_B_PNG$"
+              src="https://tribetopper.com/wp-content/uploads/2021/11/Online-learning-amico-1024x1024.png"
               alt="Placeholder image"
               class="modal-button"
               data-target="modal-image2"
@@ -62,10 +62,10 @@
         </div>
         <div class="card-content">
           <div class="content">
-            <h4>Clases</h4>
+            <h4>Clases virtuales</h4>
             <p></p>
             <a
-              href="https://estudiantes.samsung.com.pe/?utm_source=s-membersNewsRoom&utm_medium=image&utm_campaign=CMO-EppStudent-users-CommunityNewsromm-202204-tactica&cid=pe_owned_CommunityNewsromm_s-membersNewsRoom_EppStudent_users-CMO-none_202204_image_smembersCommNewsroom"
+              href="https://estudiaperu.pe/guias/consejos-para-sobrevivir-a-las-clases-virtuales/"
             >
               <span
                 class="button is-link modal-button"
@@ -79,14 +79,14 @@
     </div>
   </div>
 
-  <!-- post 1-->
+  <!-- post 2-->
   <div class="columns features" style="margin-top: 10px">
     <div class="column is-4">
       <div class="card is-shady">
         <div class="card-image">
           <figure class="image is-4by3">
             <img
-              src="https://images.samsung.com/is/image/samsung/assets/global/about-us/brand/logo/360_197_1.png?$FB_TYPE_B_PNG$"
+              src="https://18650283.s21i.faiusr.com/4/ABUIABAEGAAguN6FkQYouL-yqwMw9AM49AM!400x400.png.webp"
               alt="Placeholder image"
               class="modal-button"
               data-target="modal-image2"
@@ -95,10 +95,10 @@
         </div>
         <div class="card-content">
           <div class="content">
-            <h4>Clases</h4>
+            <h4>Clases hibridas</h4>
             <p></p>
             <a
-              href="https://estudiantes.samsung.com.pe/?utm_source=s-membersNewsRoom&utm_medium=image&utm_campaign=CMO-EppStudent-users-CommunityNewsromm-202204-tactica&cid=pe_owned_CommunityNewsromm_s-membersNewsRoom_EppStudent_users-CMO-none_202204_image_smembersCommNewsroom"
+              href="https://conecta.tec.mx/es/noticias/nacional/educacion/consejos-para-mejorar-las-clases-hibridas-segun-experto-internacional"
             >
               <span
                 class="button is-link modal-button"
@@ -112,14 +112,14 @@
     </div>
   </div>
 
-  <!-- post 1-->
+  <!-- post 3-->
   <div class="columns features" style="margin-top: 10px">
     <div class="column is-4">
       <div class="card is-shady">
         <div class="card-image">
           <figure class="image is-4by3">
             <img
-              src="https://images.samsung.com/is/image/samsung/assets/global/about-us/brand/logo/360_197_1.png?$FB_TYPE_B_PNG$"
+              src="https://img.freepik.com/free-vector/stem-education-isometric-composition-with-classroom-indoor-scenery-kids-sitting-desks-with-teacher-characters_1284-31582.jpg?w=2000"
               alt="Placeholder image"
               class="modal-button"
               data-target="modal-image2"
@@ -128,10 +128,10 @@
         </div>
         <div class="card-content">
           <div class="content">
-            <h4>Clases</h4>
+            <h4>Clases presenciales</h4>
             <p></p>
             <a
-              href="https://estudiantes.samsung.com.pe/?utm_source=s-membersNewsRoom&utm_medium=image&utm_campaign=CMO-EppStudent-users-CommunityNewsromm-202204-tactica&cid=pe_owned_CommunityNewsromm_s-membersNewsRoom_EppStudent_users-CMO-none_202204_image_smembersCommNewsroom"
+              href="https://www.unicef.org/chile/comunicados-prensa/10-recomendaciones-para-el-retorno-clases-en-2021"
             >
               <span
                 class="button is-link modal-button"

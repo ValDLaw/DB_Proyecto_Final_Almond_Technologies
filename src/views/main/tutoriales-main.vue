@@ -56,28 +56,23 @@
       <div class="card-image">
         <figure class="image is-4by3">
           <img
-            src="https://tic.cinvestav.mx/Portals/0/EasyDNNnews/96/img-Microsoft-Whiteboard-ion.png"
+            src="https://www.clickbinar.com/wp-content/uploads/2021/04/ClickBinar-Niel-Tan-Traffic-Sources.png"
             alt="Placeholder image"
           />
         </figure>
       </div>
       <div class="card-content">
         <div class="content">
-          <h4>Microsoft Whiteboard.</h4>
+          <h4>Plataformas Virtuales</h4>
           <p>
-            Whiteboard es la pizarra digital de Microsoft, para la colaboración
-            creativa de ideas y contenido. La aplicación está diseñada para
-            equipos que necesitan idear, realizar, y trabajar juntos y de manera
-            simultánea, tanto en persona como remotamente, y a través de
-            múltiples dispositivos
+            Son sistemas de gestión de aprendizaje, que permiten distribuir y
+            controlar diversos tipos de contenidos y recursos educativos,
           </p>
-          <a
-            href="https://www.youtube.com/playlist?list=PLlM0tKd2OBZU_6mMX0J7ETI0Qj-uhSGTs"
-          >
+          <router-link to="/plataformas-virtuales-tutoriales">
             <span class="button is-link modal-button" data-target="modal-image2"
               >Ver tutoriales</span
             >
-          </a>
+          </router-link>
         </div>
       </div>
     </div>
@@ -91,28 +86,23 @@
       <div class="card-image">
         <figure class="image is-4by3">
           <img
-            src="https://tic.cinvestav.mx/Portals/0/EasyDNNnews/96/img-Microsoft-Whiteboard-ion.png"
+            src="https://www.ganeshawebtech.com/wp-content/uploads/2022/01/ios_abanner.svg"
             alt="Placeholder image"
           />
         </figure>
       </div>
       <div class="card-content">
         <div class="content">
-          <h4>Microsoft Whiteboard.</h4>
+          <h4>Videoconferencias</h4>
           <p>
-            Whiteboard es la pizarra digital de Microsoft, para la colaboración
-            creativa de ideas y contenido. La aplicación está diseñada para
-            equipos que necesitan idear, realizar, y trabajar juntos y de manera
-            simultánea, tanto en persona como remotamente, y a través de
-            múltiples dispositivos
+            Las videoconferencias permiten mantener reuniones con grupos de
+            personas situadas en lugares alejados entre sí
           </p>
-          <a
-            href="https://www.youtube.com/playlist?list=PLlM0tKd2OBZU_6mMX0J7ETI0Qj-uhSGTs"
-          >
+          <router-link to="/videoconferencias-tutoriales">
             <span class="button is-link modal-button" data-target="modal-image2"
               >Ver tutoriales</span
             >
-          </a>
+          </router-link>
         </div>
       </div>
     </div>
@@ -121,34 +111,31 @@
   <!-- post 3-->
   <div
     class="columns features"
-    style="margin-top: 10px; width: 520px; margin-left: 300px"
+    style="margin-top: 80px; width: 520px; margin-left: 300px"
   >
     <div class="card is-shady">
       <div class="card-image">
         <figure class="image is-4by3">
           <img
-            src="https://tic.cinvestav.mx/Portals/0/EasyDNNnews/96/img-Microsoft-Whiteboard-ion.png"
+            src="https://meunion.com.tr/wp-content/uploads/2021/02/Scrum-board-bro.png"
             alt="Placeholder image"
           />
         </figure>
       </div>
       <div class="card-content">
         <div class="content">
-          <h4>Microsoft Whiteboard.</h4>
+          <h4>Pizarras virtuales</h4>
           <p>
-            Whiteboard es la pizarra digital de Microsoft, para la colaboración
-            creativa de ideas y contenido. La aplicación está diseñada para
-            equipos que necesitan idear, realizar, y trabajar juntos y de manera
-            simultánea, tanto en persona como remotamente, y a través de
-            múltiples dispositivos
+            Las pizarras online son plataformas en la nube para el trabajo
+            colaborativo, que pueden usarse en combinación con tu sistema de
+            Videoconferencias o un aula virtual y tiene una variedad de
+            funciones y herramientas
           </p>
-          <a
-            href="https://www.youtube.com/playlist?list=PLlM0tKd2OBZU_6mMX0J7ETI0Qj-uhSGTs"
-          >
+          <router-link to="/pizarras-virtuales-tutoriales">
             <span class="button is-link modal-button" data-target="modal-image2"
               >Ver tutoriales</span
             >
-          </a>
+          </router-link>
         </div>
       </div>
     </div>
@@ -162,28 +149,25 @@
       <div class="card-image">
         <figure class="image is-4by3">
           <img
-            src="https://tic.cinvestav.mx/Portals/0/EasyDNNnews/96/img-Microsoft-Whiteboard-ion.png"
+            src="https://img.freepik.com/vector-gratis/ilustracion-concepto-tablero-scrum_114360-1591.jpg"
             alt="Placeholder image"
           />
         </figure>
       </div>
       <div class="card-content">
         <div class="content">
-          <h4>Microsoft Whiteboard.</h4>
+          <h4>Apps de organizacion</h4>
           <p>
-            Whiteboard es la pizarra digital de Microsoft, para la colaboración
-            creativa de ideas y contenido. La aplicación está diseñada para
-            equipos que necesitan idear, realizar, y trabajar juntos y de manera
-            simultánea, tanto en persona como remotamente, y a través de
-            múltiples dispositivos
+            Las app de organizacion permiten crear listas de tareas con sus
+            correspondientes recordatorios o establecer rutinas de trabajo son
+            algunas de las funciones que incluyen las apps de organización más
+            populares
           </p>
-          <a
-            href="https://www.youtube.com/playlist?list=PLlM0tKd2OBZU_6mMX0J7ETI0Qj-uhSGTs"
-          >
+          <router-link to="/apps-organizacionales-tutoriales">
             <span class="button is-link modal-button" data-target="modal-image2"
               >Ver tutoriales</span
             >
-          </a>
+          </router-link>
         </div>
       </div>
     </div>
