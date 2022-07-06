@@ -53,7 +53,7 @@
         <div class="card-image">
           <figure class="image is-4by3">
             <img
-              src="https://cdn-icons-png.flaticon.com/512/2965/2965289.png"
+              src="https://www.clickbinar.com/wp-content/uploads/2021/04/ClickBinar-Niel-Tan-Traffic-Sources.png"
               alt="Placeholder image"
               class="modal-button"
               data-target="modal-image2"
@@ -62,23 +62,21 @@
         </div>
         <div class="card-content">
           <div class="content">
-            <h4>Jamboard</h4>
+            <h4>Aplicaciones para volver mas participativa a la clase</h4>
             <p>
-              Jamboard es una pantalla inteligente que te permite extraer con
-              rapidez imágenes de una búsqueda en Google, guardar el trabajo en
-              la nube automáticamente, usar la herramienta de reconocimiento de
-              formas y escritura a mano fácil de leer, y dibujar con una pluma
+              El día a día en el aula puede ser más dinámico si incorporamos
+              herramientas digitales en la práctica docente, creando nuevas
+              rutinas y motivando a los alumnos y alumnas a participar y adoptar
+              un rol más activo.
             </p>
 
-            <a
-              href="https://www.youtube.com/playlist?list=PLlM0tKd2OBZXj6YjNxDTI8IfT8LPMB3Zd"
-            >
+            <router-link to="/apps-participativa-ma">
               <span
                 class="button is-link modal-button"
                 data-target="modal-image2"
-                >Ver tutoriales</span
+                >Ver aplicaciones</span
               >
-            </a>
+            </router-link>
           </div>
         </div>
       </div>
@@ -94,28 +92,24 @@
       <div class="card-image">
         <figure class="image is-4by3">
           <img
-            src="https://tic.cinvestav.mx/Portals/0/EasyDNNnews/96/img-Microsoft-Whiteboard-ion.png"
+            src="https://meunion.com.tr/wp-content/uploads/2021/02/Scrum-board-bro.png"
             alt="Placeholder image"
           />
         </figure>
       </div>
       <div class="card-content">
         <div class="content">
-          <h4>Microsoft Whiteboard.</h4>
+          <h4>Organización</h4>
           <p>
-            Whiteboard es la pizarra digital de Microsoft, para la colaboración
-            creativa de ideas y contenido. La aplicación está diseñada para
-            equipos que necesitan idear, realizar, y trabajar juntos y de manera
-            simultánea, tanto en persona como remotamente, y a través de
-            múltiples dispositivos
+            Crear listas de tareas con sus correspondientes recordatorios o
+            establecer rutinas de trabajo son algunas de las funciones que
+            incluyen las apps de organización más populares.
           </p>
-          <a
-            href="https://www.youtube.com/playlist?list=PLlM0tKd2OBZU_6mMX0J7ETI0Qj-uhSGTs"
-          >
+          <router-link to="/apps-organizacionales-hd">
             <span class="button is-link modal-button" data-target="modal-image2"
-              >Ver tutoriales</span
+              >Ver aplicaciones</span
             >
-          </a>
+          </router-link>
         </div>
       </div>
     </div>
@@ -129,28 +123,24 @@
       <div class="card-image">
         <figure class="image is-4by3">
           <img
-            src="https://www.edu.xunta.es/espazoAbalar/sites/espazoAbalar/files/openboard_0.jpg"
+            src="https://ehssansindi.com/wp-content/uploads/2021/03/home-1.gif"
             alt="Placeholder image"
           />
         </figure>
       </div>
       <div class="card-content">
         <div class="content">
-          <h4>Openboard</h4>
+          <h4>Aplicaciones para aprender sobre temas especificos</h4>
           <p>
-            Openboard permite simular en el escritorio del computador una
-            pizarra virtual que se puede compartir con los estudiantes. Permite
-            visualizar un tablero en blanco, insertar fondos con cuadrículas,
-            cargar imágenes y videos, utilizar aplicaciones integradas como para
-            trabajar con mapas, reglas, cronómetro, lápiz etc.
+            La educación online (también llamada virtual), es el desarrollo de
+            distintos programas cuyo objetivo es formar o enseñar a través de la
+            Internet.
           </p>
-          <a
-            href="https://www.youtube.com/playlist?list=PLlM0tKd2OBZWf1CLMl95LFEk4CiYfSfMz"
-          >
+          <router-link to="/apps-temas-especificos-ma">
             <span class="button is-link modal-button" data-target="modal-image2"
-              >Ver tutoriales</span
+              >Ver aplicaciones</span
             >
-          </a>
+          </router-link>
         </div>
       </div>
     </div>
