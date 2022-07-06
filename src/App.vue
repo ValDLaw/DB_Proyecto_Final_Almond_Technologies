@@ -8,7 +8,7 @@
     <router-link to="/material-adicional">Material </router-link>|
     <router-link to="/herramientas-digitales">Herramientas </router-link>|
     <router-link to="/juegos-main">Juegos </router-link>|
-    <router-link to="/about">Salir </router-link>
+    <router-link to="/apps-organizacionales-hd">Salir </router-link>
   </nav>
   <router-view />
 </template>
