@@ -36,7 +36,7 @@
   <section class="hero is-info is-small">
     <div class="hero-body">
       <div class="container has-text-centered">
-        <p class="title">Aplicaciones organizacionales</p>
+        <p class="title">Tutoriales de aplicaciones organizacionales</p>
       </div>
     </div>
   </section>

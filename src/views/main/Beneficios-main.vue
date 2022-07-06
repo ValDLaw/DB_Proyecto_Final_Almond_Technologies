@@ -33,6 +33,15 @@
     />
   </head>
 
+  <!-- titulo general -->
+  <section class="hero is-info is-small">
+    <div class="hero-body">
+      <div class="container has-text-centered">
+        <p class="title">Beneficios</p>
+      </div>
+    </div>
+  </section>
+  <!-- titulo div1 -->
   <section class="hero is-info is-small">
     <div class="hero-body">
       <div class="container has-text-centered">
@@ -152,7 +161,7 @@
       </div>
     </div>
   </div>
-  <!-- titulo 2-->
+  <!-- titulo div2-->
 
   <section class="hero is-info is-small" style="margin-top: 50px">
     <div class="hero-body">

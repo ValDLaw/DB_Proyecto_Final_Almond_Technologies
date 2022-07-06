@@ -46,17 +46,16 @@ const routes = [
   },
   //4
   {
-    path: "/pizarras-virtuales-tutoriales",
-    name: "pizarras-virtuales-tutoriales",
+    path: "/videoconferencias-tutoriales",
+    name: "videoconferencias-tutoriales",
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
     component: () =>
       import(
-        /* webpackChunkName: "about" */ "../views/int-tutoriales/Pizarras-virtuales-tutoriales.vue"
+        /* webpackChunkName: "about" */ "../views/int-tutoriales/videoconferencias-tutoriales.vue"
       ),
   },
-
   //Material adicional
   //1
   {
@@ -214,16 +213,42 @@ const routes = [
         /* webpackChunkName: "about" */ "../views/main/modelo-de-clases.vue"
       ),
   },
-
-  //relleno
+  //inicio de sesion
+  //login
   {
-    path: "/about",
-    name: "about",
+    path: "/login-is",
+    name: "login-is",
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
     component: () =>
-      import(/* webpackChunkName: "about" */ "../views/AboutView.vue"),
+      import(
+        /* webpackChunkName: "about" */ "../views/inicio-sesion/login-is.vue"
+      ),
+  },
+  //password
+  {
+    path: "/password-is",
+    name: "password-is",
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () =>
+      import(
+        /* webpackChunkName: "about" */ "../views/inicio-sesion/password-is.vue"
+      ),
+  },
+  //sign up
+  {
+    path: "/sign-up",
+    name: "sign-up",
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () =>
+      import(
+        /* webpackChunkName: "about" */ "../views/inicio-sesion/sign-up.vue"
+      ),
   },
 ];
 

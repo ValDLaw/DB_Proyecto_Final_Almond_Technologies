@@ -1,14 +1,15 @@
 <template>
   <nav>
     <router-link to="/">Cuenta </router-link> |
-    <router-link to="/tutoriales-main">Tutoriales </router-link>|
-    <router-link to="/Beneficios-main">Beneficios </router-link>|
-    <router-link to="/modelo-de-clases">Modelo de clases </router-link>|
-    <router-link to="/tips-main">Tips </router-link>|
-    <router-link to="/material-adicional">Material </router-link>|
-    <router-link to="/herramientas-digitales">Herramientas </router-link>|
-    <router-link to="/juegos-main">Juegos </router-link>|
-    <router-link to="/apps-organizacionales-hd">Salir </router-link>
+    <router-link to="/tutoriales-main"> Tutoriales </router-link>|
+    <router-link to="/Beneficios-main"> Beneficios </router-link>|
+    <router-link to="/modelo-de-clases"> Modelo de clases </router-link>|
+    <router-link to="/tips-main"> Tips </router-link>|
+    <router-link to="/material-adicional"> Material </router-link>|
+    <router-link to="/herramientas-digitales">
+      Herramientas digitales</router-link
+    >| <router-link to="/juegos-main"> Juegos </router-link>|
+    <router-link to="/login-is"> Salir </router-link>
   </nav>
   <router-view />
 </template>

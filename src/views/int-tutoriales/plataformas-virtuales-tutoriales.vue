@@ -36,7 +36,7 @@
   <section class="hero is-info is-small">
     <div class="hero-body">
       <div class="container has-text-centered">
-        <p class="title">Plataformas virtuales tutoriales</p>
+        <p class="title">Tutoriales de plataformas virtuales</p>
       </div>
     </div>
   </section>

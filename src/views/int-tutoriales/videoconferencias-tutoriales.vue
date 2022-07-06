@@ -36,7 +36,7 @@
   <section class="hero is-info is-small">
     <div class="hero-body">
       <div class="container has-text-centered">
-        <p class="title">Herramientas Digitales</p>
+        <p class="title">Tutoriales de videoconferencias</p>
       </div>
     </div>
   </section>
@@ -56,7 +56,7 @@
       <div class="card-image">
         <figure class="image is-4by3">
           <img
-            src="http://www.humanistasguatemala.org/wp-content/uploads/2021/03/zoom-logo.png"
+            src="https://www.silicon.es/wp-content/uploads/2022/04/zoom-png-logo-download-transparent-20-1.png"
             alt="Placeholder image"
           />
         </figure>
@@ -65,9 +65,9 @@
         <div class="content">
           <h4>Zoom</h4>
           <p>
-            Zoom utiliza los servicios de la nube en Internet para realizar videoconferencias 
-            por video, audio o ambos, uniendo a personas de todo el mundo a través de una 
-            cámara web o un teléfono.
+            Zoom utiliza los servicios de la nube en Internet para realizar
+            videoconferencias por video, audio o ambos, uniendo a personas de
+            todo el mundo a través de una cámara web o un teléfono.
           </p>
           <a
             href="https://www.youtube.com/playlist?list=PLlM0tKd2OBZWacH3ZDDcKON2qarKVr9LN"
@@ -98,11 +98,11 @@
         <div class="content">
           <h4>Google Meet.</h4>
           <p>
-            Google Meet funciona en cualquier dispositivo. Únete a reuniones desde un 
-            ordenador de escritorio o portátil, con un dispositivoAndroid o con un 
-            iPhone o iPad. Si tu organización necesita utilizar una sala de 
-            conferencias, el hardware de Google Meet ofrece opciones de 
-            gran calidad a un precio asequible.
+            Google Meet funciona en cualquier dispositivo. Únete a reuniones
+            desde un ordenador de escritorio o portátil, con un
+            dispositivoAndroid o con un iPhone o iPad. Si tu organización
+            necesita utilizar una sala de conferencias, el hardware de Google
+            Meet ofrece opciones de gran calidad a un precio asequible.
           </p>
           <a
             href="https://www.youtube.com/playlist?list=PLlM0tKd2OBZV8Mg-aHB8Xo6fvff8pXdiv"
@@ -134,10 +134,10 @@
         <div class="content">
           <h4>Skype</h4>
           <p>
-            Skype es un software que permite que todo el mundo se comunique. Millones 
-            de personas y empresas ya usan Skype para hacer llamadas y videollamadas 
-            gratis individuales y grupales, enviar mensajes instantáneos y compartir 
-            archivos con otras personas que usan Skype.
+            Skype es un software que permite que todo el mundo se comunique.
+            Millones de personas y empresas ya usan Skype para hacer llamadas y
+            videollamadas gratis individuales y grupales, enviar mensajes
+            instantáneos y compartir archivos con otras personas que usan Skype.
           </p>
           <a
             href="https://www.youtube.com/playlist?list=PLlM0tKd2OBZWbbLVFAVuIgrIielFxLB9O"
@@ -168,10 +168,11 @@
         <div class="content">
           <h4>Jitsy.</h4>
           <p>
-            Jitsi Meet sirve para realizar videollamadas o conferencias de hasta 100 participantes de 
-            manera gratuita y sin necesidad de cuenta. Sus opciones son más avanzadas que en el 
-            resto de herramientas del estilo, pudiendo ver estadísticas de los participantes como 
-            el tiempo que ha hablado en total.
+            Jitsi Meet sirve para realizar videollamadas o conferencias de hasta
+            100 participantes de manera gratuita y sin necesidad de cuenta. Sus
+            opciones son más avanzadas que en el resto de herramientas del
+            estilo, pudiendo ver estadísticas de los participantes como el
+            tiempo que ha hablado en total.
           </p>
           <a
             href="https://www.youtube.com/playlist?list=PLlM0tKd2OBZV5FaZTKEprLYtwhtUCx5XV"
