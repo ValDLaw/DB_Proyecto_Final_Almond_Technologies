@@ -41,16 +41,17 @@ def password_check(password):
 
 def create_app(test_config=None):
     app = Flask(__name__)
-    database_name = 'almond_tec'
+    database_name = 'almond_tec_test'
     database_path = 'postgresql://{}@{}/{}'.format('postgres:abc', 'localhost:5432', database_name)
     setup_db(app, database_path)
 
     #---------------CORS SETUP---------------
 
-    CORS(app, origins=['http://192.168.3.6:8080/'])
+    CORS(app, origins=['http://192.168.1.4:8080/'])
 
     @app.after_request
     def after_request(response):
+        response.headers.add('Access-Control-Allow-Origin', '*')
         response.headers.add('Access-Control-Allow-Headers', 'Content-Type, Authorizations, true')
         response.headers.add('Access-Control-Allow-Methods', 'GET, POST, PATCH, DELETE, OPTIONS')
         return response
@@ -106,7 +107,10 @@ def create_app(test_config=None):
                 token = jwt.encode({'public_id' : user_existe.public_id, 
                                     'exp' : datetime.datetime.utcnow() + datetime.timedelta(minutes=45)},
                                     app.config['SECRET_KEY'], "HS256")
-                return jsonify({'token' : token})
+                return jsonify({
+                    'success': True,
+                    'token' : token
+                })
         
         except Exception as e:
             if error_422:

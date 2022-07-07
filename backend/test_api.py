@@ -131,6 +131,7 @@ class TestsAlmondTecApi(unittest.TestCase):
         #print(data)
         
         self.assertEqual(res.status_code, 200)
+        self.assertEqual(data['success'], True)
         self.assertTrue(data['token'])
     
     def test_login_wrongpassword(self):
