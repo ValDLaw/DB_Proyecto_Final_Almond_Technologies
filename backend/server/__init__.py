@@ -62,8 +62,8 @@ def create_app(test_config=None):
         @wraps(f)
         def decorator(*args, **kwargs):
             token = None
-            if 'x-access-tokens' in request.headers:
-                token = request.headers['x-access-tokens']
+            if 'Authorization' in request.headers:
+                token = request.headers['Authorization']
         
             if not token:
                 return jsonify({

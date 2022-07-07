@@ -104,7 +104,7 @@ class TestsAlmondTecApi(unittest.TestCase):
         self.assertTrue(data['message'])
     
     def test_user_wrong_token(self):
-        res = self.client().get('/user', headers={'Content-Type': 'application/json', 'x-access-tokens': 'abc123'})
+        res = self.client().get('/user', headers={'Content-Type': 'application/json', 'Authorization': 'abc123'})
         data = json.loads(res.data)
         #print(data)
 
@@ -115,7 +115,7 @@ class TestsAlmondTecApi(unittest.TestCase):
         res0 = self.client().post('/login', json=self.user_login)
         data0 = json.loads(res0.data)
         token = data0['token']
-        res = self.client().get('/user', headers={'Content-Type': 'application/json', 'x-access-tokens': token})
+        res = self.client().get('/user', headers={'Content-Type': 'application/json', 'Authorization': token})
         data = json.loads(res.data)
         #print(data)
         
