@@ -1,233 +1,237 @@
-from http import client
-import unittest
-import uuid
-
-from flask_login import current_user
-from requests import head
-from server import create_app
-from models import setup_db, Usuario
+from asyncio.subprocess import SubprocessStreamProtocol
+from distutils.log import error
 import json
+import re
+
+from flask import (
+    Flask,
+    abort,
+    jsonify,
+    request
+)
+
 from werkzeug.security import generate_password_hash, check_password_hash
+from flask_cors import CORS
+from models import setup_db, Usuario
 
-#python -m unittest
+from functools import wraps
+import uuid
+import jwt
+import datetime
 
-class TestsAlmondTecApi(unittest.TestCase):
-    def setUp(self):
-        self.app = create_app() #de server
-        self.client = self.app.test_client
-        self.database_name = 'almond_tec_test' #nueva bdd
-        self.database_path = 'postgresql://{}@{}/{}'.format('postgres:abc', 'localhost:5432', self.database_name)
+#$env:FLASK_APP = "server"
+#$env:FLASK_ENV = "development"
+#flask run
 
-        setup_db(self.app, self.database_path) #de models.py
+def password_check(password):
+    check = True
+    if (len(password) <= 11):
+        check = False
+    elif not re.search("[a-z]", password):
+        check = False
+    elif not re.search("[A-Z]", password):
+        check = False
+    elif not re.search("[0-9]", password):
+        check = False
+    elif not re.search("[!#$%&?]", password):
+        check = False
+    elif re.search(r"\s", password):
+        check = False
+    return check
 
-        if not Usuario.query.filter_by(id=202110567).first():
-            self.permanent_user = Usuario(id=202110567, public_id=str(uuid.uuid4()), nombres='Sofía', apellidos='García', rol='E', email='sofia.garcia@utec.edu.pe',
-                            password=generate_password_hash('$ClaveSegura123', method='sha256'))
-            self.permanent_user.insert()
+def create_app(test_config=None):
+    app = Flask(__name__)
+    database_name = 'almond_tec_test'
+    database_path = 'postgresql://{}@{}/{}'.format('postgres:abc', 'localhost:5432', database_name)
+    setup_db(app, database_path)
 
-        self.good_user = {
-            'id': 202110123,
-            'nombres': 'Sofía',
-            'apellidos': 'Quintana',
-            'email': 'sofia.quintana@utec.edu.pe',
-            'password': '$ClaveSegura123'
-            }
+    #---------------CORS SETUP---------------
+
+    CORS(app, origins=['http://192.168.1.4:8080/'])
+
+    @app.after_request
+    def after_request(response):
+        response.headers.add('Access-Control-Allow-Origin', '*')
+        response.headers.add('Access-Control-Allow-Headers', 'Content-Type, Authorization, true')
+        response.headers.add('Access-Control-Allow-Methods', 'GET, POST, PATCH, DELETE, OPTIONS')
+        return response
+    
+    #---------------AUTENTICACIÓN GENERAL---------------
+
+    def token_required(f):
+        @wraps(f)
+        def decorator(*args, **kwargs):
+            token = None
+            if 'Authorization' in request.headers:
+                token = request.headers['Authorization']
         
-        self.bad_code = {
-            'id': 2020,
-            'nombres': 'Luisa',
-            'apellidos': 'Mora',
-            'email': 'luisa.mora@utec.edu.pe',
-            'password': '$ClaveSegura123'
-        }
-
-        self.bad_email = {
-            'id': 202110560,
-            'nombres': 'Luisa',
-            'apellidos': 'Mora',
-            'email': 'luisa.mora@gmail.com',
-            'password': '$ClaveSegura123'
-        }
+            if not token:
+                return jsonify({
+                    'success': False,
+                    'message':'Falta un token valido.'
+                    })
+            try:
+                body = jwt.decode(token, app.config['SECRET_KEY'], algorithms=["HS256"])
+                current_user = Usuario.query.filter_by(public_id=body['public_id']).first()
+            except:
+                return jsonify({
+                    'success': False,
+                    'message': 'Token invalido.'
+                    })
         
-        self.repeated_code = {
-            'id': 202110567,
-            'nombres': 'Luisa',
-            'apellidos': 'Mora',
-            'email': 'luisa.mora@utec.edu.pe',
-            'password': '$ClaveSegura123'
-        }
+            return f(current_user, *args, **kwargs)
+        return decorator
 
-        self.repeated_email = {
-            'id': 202110560,
-            'nombres': 'Luisa',
-            'apellidos': 'Mora',
-            'email': 'sofia.garcia@utec.edu.pe',
-            'password': '$ClaveSegura123'
-        }
+    #---------------ENDPOINTS---------------
+
+    @app.route('/login', methods=['POST'])
+    def login():
+        error_422 = False
+        error_401 = True
+        body = request.get_json()
+        email = body.get('email', None)
+        password = body.get('password', None)   
         
-        self.bad_password = {
-            'id': 202110560,
-            'nombres': 'Luisa',
-            'apellidos': 'Mora',
-            'email': 'luisa.mora@utec.edu.pe',
-            'password': '123'
-        }
-        
-        self.incomplete_user = {
-            'id': 202110567,
-            'nombres': 'Sofía',
-            'apellidos': 'García',
-            'email': 'sofia.garcia@utec.edu.pe'
-        }
-
-        self.user_login = {
-            'email': 'sofia.garcia@utec.edu.pe',
-            'password': '$ClaveSegura123'
-        }
-
-        self.user_login_badkey = {
-            'email': 'sofia.garcia@utec.edu.pe',
-            'password': 'abc'
-        }
-
-        self.user_login_bademail = {
-            'email': 'sofia.garcia@gmail.com',
-            'password': '$ClaveSegura123'
-        }
+        if email is None or password is None: #incompleto
+            error_422 = True
+            abort(422)
+        try:
+            #------------AUTENTICACIÓN------------
+            user_existe = Usuario.query.filter_by(email=email).first() #revisa si existe el user en la base de datos
             
-    def test_user_not_autheticated(self):
-        res = self.client().get('/user')
-        data = json.loads(res.data)
-        #print(data)
+            if not user_existe or not check_password_hash(user_existe.password, password):
+                abort(401)
+            
+            if user_existe and check_password_hash(user_existe.password, password):
+                error_401 = False
+                token = jwt.encode({'public_id' : user_existe.public_id, 
+                                    'exp' : datetime.datetime.utcnow() + datetime.timedelta(minutes=45)},
+                                    app.config['SECRET_KEY'], "HS256")
+                return jsonify({
+                    'success': True,
+                    'token' : token
+                })
+        
+        except Exception as e:
+            if error_422:
+                abort(422)
+            if error_401:
+                abort(401)
+            print(e)
+            abort(500)
 
-        self.assertEqual(data['success'], False)
-        self.assertTrue(data['message'])
-    
-    def test_user_wrong_token(self):
-        res = self.client().get('/user', headers={'Content-Type': 'application/json', 'Authorization': 'abc123'})
-        data = json.loads(res.data)
-        #print(data)
+    @app.route('/signup', methods=['POST'])
+    def signup():
+        error_422 = False
+        body = request.get_json()
+        id = body.get('id', None)
+        nombres = body.get('nombres', None)
+        apellidos = body.get('apellidos', None)
+        email = body.get('email', None)
+        password = body.get('password', None)
 
-        self.assertEqual(data['success'], False)
-        self.assertTrue(data['message'])
+        if (id is None
+            or nombres is None
+            or apellidos is None
+            or email is None
+            or password is None): #incompleto
+            error_422 = True
+            abort(422)
 
-    def test_user_authenticated(self):
-        res0 = self.client().post('/login', json=self.user_login)
-        data0 = json.loads(res0.data)
-        token = data0['token']
-        res = self.client().get('/user', headers={'Content-Type': 'application/json', 'Authorization': token})
-        data = json.loads(res.data)
-        #print(data)
-        
-        self.assertEqual(res.status_code, 200)
-        self.assertTrue(data['email'])
-        self.assertTrue(data['nombres'])
-        self.assertTrue(data['apellidos'])
-        self.assertTrue(data['rol'])
+        try:
+            #------------AUTENTICACIÓN------------
+            code_existe = Usuario.query.filter_by(id=id).first() #si regresa un código -> existe en la base de datos
+            email_existe = Usuario.query.filter_by(email=email).first() #si regresa un email -> existe en la base de datos
 
-    def test_login(self):
-        res = self.client().post('/login', json=self.user_login)
-        data = json.loads(res.data)
-        #print(data)
-        
-        self.assertEqual(res.status_code, 200)
-        self.assertEqual(data['success'], True)
-        self.assertTrue(data['token'])
-    
-    def test_login_wrongpassword(self):
-        res = self.client().post('/login', json=self.user_login_badkey)
-        data = json.loads(res.data)
-        #print(data)
-        
-        self.assertEqual(res.status_code, 401)
-        self.assertEqual(data['success'], False)
-        self.assertTrue(data['message'])
-    
-    def test_login_wrongemail(self):
-        res = self.client().post('/login', json=self.user_login_bademail)
-        data = json.loads(res.data)
-        #print(data)
-        
-        self.assertEqual(res.status_code, 401)
-        self.assertEqual(data['success'], False)
-        self.assertTrue(data['message'])
-    
-    def test_login_422(self):
-        res = self.client().post('/login', json={})
-        data = json.loads(res.data)
-        #print(data)
-        
-        self.assertEqual(res.status_code, 422)
-        self.assertEqual(data['success'], False)
-        self.assertTrue(data['message'])
+            flag = False
+            if len(str(id)) != 9:
+                flag = True
+                mensaje = 'Código debe tener 9 caracteres.'
+            if email[-12:]!="@utec.edu.pe":
+                flag = True
+                mensaje = 'Correo debe tener el formato @utec.edu.pe'
+            if code_existe:
+                flag = True
+                mensaje = 'Código ya registrado.'
+            if email_existe:
+                flag = True
+                mensaje = 'Correo ya registrado.'
+            if not password_check(password):
+                flag = True
+                mensaje = 'Contraseña debe tener mínimo de 11 caracteres y al menos una mayúscula, una minúscula, un número y un caracter especial (!#$%&?)' 
+            
+            
+            if flag:
+                return jsonify({
+                    'success': False,
+                    'message': mensaje
+                })
 
-    #---------------Usuario: SIGNUP---------------
-    def test_create_user(self):
-        #como no se utiliza el método delete, lo hacemos manualmente
-        u = Usuario.query.filter_by(id=202110123).first()
-        if u: u.delete()
-        
-        res = self.client().post('/signup', json=self.good_user)
-        data = json.loads(res.data)
-        #print(data)
-        
-        self.assertEqual(res.status_code, 200)
-        self.assertEqual(data['success'], True)
-        self.assertTrue(data['created'])
-    
-    def test_create_usermistake1(self):
-        res = self.client().post('/signup', json=self.bad_code)
-        data = json.loads(res.data)
-        #print(data)
-        
-        self.assertEqual(res.status_code, 200)
-        self.assertEqual(data['success'], False)
-        self.assertTrue(data['message'])
-    
-    def test_create_usermistake2(self):
-        res = self.client().post('/signup', json=self.bad_email)
-        data = json.loads(res.data)
-        #print(data)
-        
-        self.assertEqual(res.status_code, 200)
-        self.assertEqual(data['success'], False)
-        self.assertTrue(data['message'])
-    
-    def test_create_usermistake3(self):
-        res = self.client().post('/signup', json=self.repeated_code)
-        data = json.loads(res.data)
-        #print(data)
-        
-        self.assertEqual(res.status_code, 200)
-        self.assertEqual(data['success'], False)
-        self.assertTrue(data['message'])
-    
-    def test_create_usermistake4(self):
-        res = self.client().post('/signup', json=self.repeated_email)
-        data = json.loads(res.data)
-        #print(data)
-        
-        self.assertEqual(res.status_code, 200)
-        self.assertEqual(data['success'], False)
-        self.assertTrue(data['message'])
-    
-    def test_create_usermistake5(self):
-        res = self.client().post('/signup', json=self.bad_password)
-        data = json.loads(res.data)
-        #print(data)
-        
-        self.assertEqual(res.status_code, 200)
-        self.assertEqual(data['success'], False)
-        self.assertTrue(data['message'])
+            new_user = Usuario(id=id, public_id=str(uuid.uuid4()), nombres=nombres, apellidos=apellidos, rol='E', email=email,
+                        password=generate_password_hash(password, method='sha256'))
+            new_id = new_user.insert()
 
-    def test_create_user_failed(self):
-        res = self.client().post('/signup', json=self.incomplete_user)
-        data = json.loads(res.data)
-        #print(data)
-
-        self.assertEqual(res.status_code, 422)
-        self.assertEqual(data['success'], False)
-        self.assertTrue(data['message'])
+            return jsonify({
+                'success': True,
+                'created': new_id
+            })
+                    
+        except Exception as e:
+            if error_422:
+                abort(422)
+            print(e)
+            abort(500)
     
-    def tearDown(self):
-        pass
+    @app.route('/user', methods=['GET'])
+    @token_required
+    def user(current_user):
+        try:
+            return jsonify(current_user.format())
+        except Exception as e:
+            print(e)
+            abort(500)
+    
+    #---------------ERROR HANDLING---------------
+   
+    @app.errorhandler(404)
+    def not_found(error):
+        return jsonify({
+            'success': False,
+            'code': 404,
+            'message': 'not found'
+        }), 404
+
+    @app.errorhandler(401)
+    def unauthorized(error):
+        return jsonify({
+            'success': False,
+            'code': 401,
+            'message': 'login required'
+        }), 401
+
+    @app.errorhandler(500)
+    def server_error(error):
+        return jsonify({
+            'success': False,
+            'code': 500,
+            'message': 'internal server error'
+        }), 500
+
+
+    @app.errorhandler(405)
+    def server_error(error):
+        return jsonify({
+            'success': False,
+            'code': 405,
+            'message': 'method not allowed'
+        }), 405
+
+    @app.errorhandler(422)
+    def unprocessable(error):
+        return jsonify({
+            'success': False,
+            'code': 422,
+            'message': 'unprocessable'
+        }), 422
+
+    return app
