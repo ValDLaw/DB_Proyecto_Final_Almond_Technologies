@@ -52,7 +52,7 @@ def create_app(test_config=None):
     def load_user(user_id):
         return Usuario.query.get(int(user_id)) #el usuario lo encontramos de acuerdo al id
 
-    CORS(app, origins=['http://172.16.22.81:8080/'])
+    CORS(app, origins=['http://192.168.3.6:8080/'])
 
     @app.after_request
     def after_request(response):
