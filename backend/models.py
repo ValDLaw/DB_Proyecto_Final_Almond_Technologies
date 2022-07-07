@@ -15,14 +15,16 @@ def setup_db(app, database_path):
 class Usuario(UserMixin, db.Model): #antes UserMixin por Flask-Login
     __tablename__ = 'users'
     id = db.Column(db.BIGINT(), primary_key=True)
+    public_id = db.Column(db.String(), nullable=True)
     nombres = db.Column(db.String(), nullable=False)
     apellidos = db.Column(db.String(), nullable=False)
     rol = db.Column(db.String(), nullable=False)
     email = db.Column(db.String(), unique=True, nullable=False)
     password = db.Column(db.String(), nullable=False)
 
-    def __init__ (self, id, nombres, apellidos, rol, email, password):
+    def __init__ (self, id, public_id, nombres, apellidos, rol, email, password):
         self.id = id
+        self.public_id = public_id
         self.nombres = nombres
         self.apellidos = apellidos
         self.rol = rol
@@ -31,17 +33,16 @@ class Usuario(UserMixin, db.Model): #antes UserMixin por Flask-Login
 
     def format(self):
         return {
-            'id': self.id,
             'nombres': self.nombres,
             'apellidos': self.apellidos,
             'rol': self.rol,
             'email': self.email,
-            'password': self.password
+            'hashed_password': self.password
         }
 
     def __repr__(self):
-        return 'Todo: id={}, nombres={}, apellidos={}, rol={}, email={}, password={}'.format(
-            self.id, self.nombres, self.apellidos, self.rol, self.email, self.password)
+        return 'Todo: id={}, public_id={} nombres={}, apellidos={}, rol={}, email={}, password={}'.format(
+            self.id, self.public_id, self.nombres, self.apellidos, self.rol, self.email, self.password)
 
     #def checkpassword(password):
     
@@ -71,6 +72,7 @@ class Usuario(UserMixin, db.Model): #antes UserMixin por Flask-Login
             db.session.rollback()
         finally:
             db.session.close()
+
 
 #----------Alumnos-------------
 

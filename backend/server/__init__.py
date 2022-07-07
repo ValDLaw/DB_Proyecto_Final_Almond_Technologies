@@ -1,4 +1,5 @@
 from asyncio.subprocess import SubprocessStreamProtocol
+from distutils.log import error
 import json
 import re
 
@@ -9,14 +10,14 @@ from flask import (
     request
 )
 
-from flask_login import (
-    LoginManager, UserMixin,
-    current_user, login_required,
-    login_user, logout_user)
-
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_cors import CORS
 from models import setup_db, Usuario
+
+from functools import wraps
+import uuid
+import jwt
+import datetime
 
 #$env:FLASK_APP = "server"
 #$env:FLASK_ENV = "development"
@@ -43,14 +44,8 @@ def create_app(test_config=None):
     database_name = 'almond_tec'
     database_path = 'postgresql://{}@{}/{}'.format('postgres:abc', 'localhost:5432', database_name)
     setup_db(app, database_path)
-    
-    login_manager = LoginManager()
-    login_manager.login_view = 'login'
-    login_manager.init_app(app)
 
-    @login_manager.user_loader
-    def load_user(user_id):
-        return Usuario.query.get(int(user_id)) #el usuario lo encontramos de acuerdo al id
+    #---------------CORS SETUP---------------
 
     CORS(app, origins=['http://192.168.3.6:8080/'])
 
@@ -59,10 +54,39 @@ def create_app(test_config=None):
         response.headers.add('Access-Control-Allow-Headers', 'Content-Type, Authorizations, true')
         response.headers.add('Access-Control-Allow-Methods', 'GET, POST, PATCH, DELETE, OPTIONS')
         return response
+    
+    #---------------AUTENTICACIÓN GENERAL---------------
+
+    def token_required(f):
+        @wraps(f)
+        def decorator(*args, **kwargs):
+            token = None
+            if 'x-access-tokens' in request.headers:
+                token = request.headers['x-access-tokens']
+        
+            if not token:
+                return jsonify({
+                    'success': False,
+                    'message':'Falta un token valido.'
+                    })
+            try:
+                body = jwt.decode(token, app.config['SECRET_KEY'], algorithms=["HS256"])
+                current_user = Usuario.query.filter_by(public_id=body['public_id']).first()
+            except:
+                return jsonify({
+                    'success': False,
+                    'message': 'Token invalido.'
+                    })
+        
+            return f(current_user, *args, **kwargs)
+        return decorator
+
+    #---------------ENDPOINTS---------------
 
     @app.route('/login', methods=['POST'])
     def login():
         error_422 = False
+        error_401 = True
         body = request.get_json()
         email = body.get('email', None)
         password = body.get('password', None)   
@@ -74,27 +98,21 @@ def create_app(test_config=None):
             #------------AUTENTICACIÓN------------
             user_existe = Usuario.query.filter_by(email=email).first() #revisa si existe el user en la base de datos
             
-            if not user_existe:
-                return jsonify({
-                    'success': False,
-                    'message': 'Correo no registrado.'
-                })
-                
-            if not check_password_hash(user_existe.password, password): #revisa que el hash contraseñas sea igual
-                return jsonify({
-                    'success': False,
-                    'message': 'Clave incorrecta.'
-                })
+            if not user_existe or not check_password_hash(user_existe.password, password):
+                abort(401)
             
-            login_user(user_existe)
-            return jsonify({
-                    'success': True,
-                    'id': user_existe.id
-                })
+            if user_existe and check_password_hash(user_existe.password, password):
+                error_401 = False
+                token = jwt.encode({'public_id' : user_existe.public_id, 
+                                    'exp' : datetime.datetime.utcnow() + datetime.timedelta(minutes=45)},
+                                    app.config['SECRET_KEY'], "HS256")
+                return jsonify({'token' : token})
         
         except Exception as e:
             if error_422:
                 abort(422)
+            if error_401:
+                abort(401)
             print(e)
             abort(500)
 
@@ -145,7 +163,7 @@ def create_app(test_config=None):
                     'message': mensaje
                 })
 
-            new_user = Usuario(id=id, nombres=nombres, apellidos=apellidos, rol='E', email=email,
+            new_user = Usuario(id=id, public_id=str(uuid.uuid4()), nombres=nombres, apellidos=apellidos, rol='E', email=email,
                         password=generate_password_hash(password, method='sha256'))
             new_id = new_user.insert()
 
@@ -159,23 +177,17 @@ def create_app(test_config=None):
                 abort(422)
             print(e)
             abort(500)
-
+    
     @app.route('/user', methods=['GET'])
-    @login_required #si no se ha inciado sesion redirige al login
-    def user():
-        error_404 = False
-        if current_user is None:
-                error_404 = True
-                abort(404)
+    @token_required
+    def user(current_user):
         try:
-            '''if current_user.rol == 'E':
-                return jsonify(current_user.format()) #luega añadir más info de cursos y eso'''
             return jsonify(current_user.format())
         except Exception as e:
             print(e)
-            if error_404:
-                abort(404)
             abort(500)
+    
+    #---------------ERROR HANDLING---------------
    
     @app.errorhandler(404)
     def not_found(error):
@@ -184,6 +196,14 @@ def create_app(test_config=None):
             'code': 404,
             'message': 'not found'
         }), 404
+
+    @app.errorhandler(401)
+    def unauthorized(error):
+        return jsonify({
+            'success': False,
+            'code': 401,
+            'message': 'login required'
+        }), 401
 
     @app.errorhandler(500)
     def server_error(error):

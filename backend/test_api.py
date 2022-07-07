@@ -1,6 +1,9 @@
+from http import client
 import unittest
+import uuid
 
 from flask_login import current_user
+from requests import head
 from server import create_app
 from models import setup_db, Usuario
 import json
@@ -18,7 +21,7 @@ class TestsAlmondTecApi(unittest.TestCase):
         setup_db(self.app, self.database_path) #de models.py
 
         if not Usuario.query.filter_by(id=202110567).first():
-            self.permanent_user = Usuario(id=202110567, nombres='Sofía', apellidos='García', rol='E', email='sofia.garcia@utec.edu.pe',
+            self.permanent_user = Usuario(id=202110567, public_id=str(uuid.uuid4()), nombres='Sofía', apellidos='García', rol='E', email='sofia.garcia@utec.edu.pe',
                             password=generate_password_hash('$ClaveSegura123', method='sha256'))
             self.permanent_user.insert()
 
@@ -92,21 +95,50 @@ class TestsAlmondTecApi(unittest.TestCase):
             'password': '$ClaveSegura123'
         }
             
+    def test_user_not_autheticated(self):
+        res = self.client().get('/user')
+        data = json.loads(res.data)
+        #print(data)
+
+        self.assertEqual(data['success'], False)
+        self.assertTrue(data['message'])
+    
+    def test_user_wrong_token(self):
+        res = self.client().get('/user', headers={'Content-Type': 'application/json', 'x-access-tokens': 'abc123'})
+        data = json.loads(res.data)
+        #print(data)
+
+        self.assertEqual(data['success'], False)
+        self.assertTrue(data['message'])
+
+    def test_user_authenticated(self):
+        res0 = self.client().post('/login', json=self.user_login)
+        data0 = json.loads(res0.data)
+        token = data0['token']
+        res = self.client().get('/user', headers={'Content-Type': 'application/json', 'x-access-tokens': token})
+        data = json.loads(res.data)
+        #print(data)
+        
+        self.assertEqual(res.status_code, 200)
+        self.assertTrue(data['email'])
+        self.assertTrue(data['nombres'])
+        self.assertTrue(data['apellidos'])
+        self.assertTrue(data['rol'])
+
     def test_login(self):
         res = self.client().post('/login', json=self.user_login)
         data = json.loads(res.data)
         #print(data)
         
         self.assertEqual(res.status_code, 200)
-        self.assertEqual(data['success'], True)
-        self.assertTrue(data['id'])
+        self.assertTrue(data['token'])
     
     def test_login_wrongpassword(self):
         res = self.client().post('/login', json=self.user_login_badkey)
         data = json.loads(res.data)
         #print(data)
         
-        self.assertEqual(res.status_code, 200)
+        self.assertEqual(res.status_code, 401)
         self.assertEqual(data['success'], False)
         self.assertTrue(data['message'])
     
@@ -115,7 +147,7 @@ class TestsAlmondTecApi(unittest.TestCase):
         data = json.loads(res.data)
         #print(data)
         
-        self.assertEqual(res.status_code, 200)
+        self.assertEqual(res.status_code, 401)
         self.assertEqual(data['success'], False)
         self.assertTrue(data['message'])
     
