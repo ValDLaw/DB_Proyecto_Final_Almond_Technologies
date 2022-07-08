@@ -76,7 +76,6 @@ class Usuario(UserMixin, db.Model): #antes UserMixin por Flask-Login
 
 #----------Alumnos-------------
 
-'''
 class Estudiante(db.Model):
     __tablename__ = 'estudiantes'
     id = db.Column(db.Integer(), primary_key=True)
@@ -89,18 +88,106 @@ class Estudiante(db.Model):
         self.id = id
         self.nombres = nombres
         self.apellidos = apellidos
+        self.profesores = profesores
+        self.cursos = cursos
+
+    def format(self):
+        return {
+            'id': self.id,
+            'nombres': self.nombres,
+            'apellidos': self.apellidos,
+            'profesores': self.profesores,
+            'cursos': self.cursos
+        }
+
+    def __repr__(self):
+        return 'Estudiante: id={}, nombres={}, apellidos={}, profesores={}, cursos={}'.format(
+            self.id, self.nombres, self.apellidos, self.profesores, self.cursos)
+
+    
+    def insert(self):
+        try:
+            db.session.add(self)
+            db.session.commit()
+            return self.id
+        except:
+            db.session.rollback()
+        finally:
+            db.session.close()
+
+    def update(self):
+        try:
+            db.session.commit()
+        except:
+            db.session.rollback()
+        finally:
+            db.session.close()
+
+    def delete(self):
+        try:
+            db.session.delete(self)
+            db.session.commit()
+        except:
+            db.session.rollback()
+        finally:
+            db.session.close()
+
 
 class Profesor(db.Model):
     __tablename__ = 'profesores'
     id = db.Column(db.Integer(), primary_key=True)
     nombres = db.Column(db.String(), nullable=False)
     apellidos = db.Column(db.String(), nullable=False)
+    cursos = db.relationship('Curso', backref='profesores')
     estudiantes = db.relationship('Estudiante', secondary = 'profesores_estudiantes', overlaps="profesores")
 
-    def __init__ (self, id, nombres, apellidos):
+    def __init__ (self, id, nombres, apellidos, cursos, estudiantes):
         self.id = id
         self.nombres = nombres
         self.apellidos = apellidos
+        self.cursos = cursos
+        self.estudiantes = estudiantes
+
+    def format(self):
+        return {
+            'id': self.id,
+            'nombres': self.nombres,
+            'apellidos': self.apellidos,
+            'cursos': self.cursos,
+            'estudiantes': self.estudiantes
+        }
+
+    def __repr__(self):
+        return 'Profesor: id={}, nombres={}, apellidos={}, cursos={}, estudiantes={}'.format(
+            self.id, self.nombres, self.apellidos, self.cursos, self.estudiantes)
+            
+    
+    def insert(self):
+        try:
+            db.session.add(self)
+            db.session.commit()
+            return self.id
+        except:
+            db.session.rollback()
+        finally:
+            db.session.close()
+
+    def update(self):
+        try:
+            db.session.commit()
+        except:
+            db.session.rollback()
+        finally:
+            db.session.close()
+
+    def delete(self):
+        try:
+            db.session.delete(self)
+            db.session.commit()
+        except:
+            db.session.rollback()
+        finally:
+            db.session.close()
 
 # Crear tabla para relacion many-to-many entre Profesor y Estudiante
 class ProfesorEstudiante(db.Model):
@@ -114,18 +201,101 @@ class ProfesorEstudiante(db.Model):
         self.estudiante_id = estudiante_id
         self.promedio = promedio
 
+    def format(self):
+        return {
+            'profesor_id': self.profesor_id,
+            'estudiante_id': self.estudiante_id,
+            'promedio': self.promedio
+        }
+
+    def __repr__(self):
+        return 'ProfesorEstudiante: profesor_id={}, estudiante_id={}, promedio={}'.format(
+            self.profesor_id, self.estudiante_id, self.promedio)
+            
+    
+    def insert(self):
+        try:
+            db.session.add(self)
+            db.session.commit()
+            return self.id
+        except:
+            db.session.rollback()
+        finally:
+            db.session.close()
+
+    def update(self):
+        try:
+            db.session.commit()
+        except:
+            db.session.rollback()
+        finally:
+            db.session.close()
+
+    def delete(self):
+        try:
+            db.session.delete(self)
+            db.session.commit()
+        except:
+            db.session.rollback()
+        finally:
+            db.session.close()
+
+
 class Curso(db.Model):
     __tablename__ = 'cursos'
     id = db.Column(db.Integer(), primary_key=True)
     nombre = db.Column(db.String(), nullable=False)
     profesor_id = db.Column(db.Integer, db.ForeignKey('profesores.id'))
     extras = db.relationship('Extra', backref='cursos')
-    estudiantes = db.relationship('Estudiante', secondary = 'estudiantes_cursos', lazy = 'dynamic', overlaps="cursos")
+    estudiantes = db.relationship('Estudiante', secondary = 'estudiantes_cursos', lazy = 'dynamic', overlaps='cursos')
 
-    def __init__ (self, id, nombres, profesor_id, extras, estudiantes):
+    def __init__ (self, id, nombre, profesor_id, extras, estudiantes):
         self.id = id
-        self.nombres = nombres
+        self.nombre = nombre
         self.profesor_id = profesor_id
+        self.extras = extras
+        self.estudiantes = estudiantes
+
+    def format(self):
+        return {
+            'id': self.id,
+            'nombre': self.nombre,
+            'profesor_id': self.profesor_id,
+            'extras': self.extras,
+            'estudiantes': self.estudiantes
+        }
+
+    def __repr__(self):
+        return 'Curso: id={}, nombre={}, profesor_id={}, extras={}, estudiantes={}'.format(
+            self.id, self.nombre, self.profesor_id, self.extras, self.estudiantes)
+    
+    def insert(self):
+        try:
+            db.session.add(self)
+            db.session.commit()
+            return self.id
+        except:
+            db.session.rollback()
+        finally:
+            db.session.close()
+
+    def update(self):
+        try:
+            db.session.commit()
+        except:
+            db.session.rollback()
+        finally:
+            db.session.close()
+
+    def delete(self):
+        try:
+            db.session.delete(self)
+            db.session.commit()
+        except:
+            db.session.rollback()
+        finally:
+            db.session.close()
+
 
 # Crear tabla para relacion many-to-many entre Estudiante y Curso
 class EstudianteCurso(db.Model):
@@ -136,6 +306,44 @@ class EstudianteCurso(db.Model):
     def __init__ (self, estudiante_id, curso_id):
         self.estudiante_id = estudiante_id
         self.curso_id = curso_id
+        
+    def format(self):
+        return {
+            'estudiante_id': self.estudiante_id,
+            'curso_id': self.curso_id
+        }
+
+    def __repr__(self):
+        return 'Curso: estudiante_id={}, curso_id={}'.format(
+            self.estudiante_id, self.curso_id)
+    
+    def insert(self):
+        try:
+            db.session.add(self)
+            db.session.commit()
+            return self.id
+        except:
+            db.session.rollback()
+        finally:
+            db.session.close()
+
+    def update(self):
+        try:
+            db.session.commit()
+        except:
+            db.session.rollback()
+        finally:
+            db.session.close()
+
+    def delete(self):
+        try:
+            db.session.delete(self)
+            db.session.commit()
+        except:
+            db.session.rollback()
+        finally:
+            db.session.close()
+
 
 class Extra(db.Model):
     __tablename__ = 'extras'
@@ -149,4 +357,42 @@ class Extra(db.Model):
         self.tema = tema
         self.curso_id = curso_id
         self.link = link
-'''
+
+    def format(self):
+        return {
+            'nombre': self.nombre,
+            'tema': self.tema,
+            'curso_id': self.curso_id,
+            'link': self.link
+        }
+
+    def __repr__(self):
+        return 'Curso: nombre={}, tema={}, curso_id={}, link={}'.format(
+            self.nombre, self.tema, self.curso_id, self.link)
+    
+    def insert(self):
+        try:
+            db.session.add(self)
+            db.session.commit()
+            return self.id
+        except:
+            db.session.rollback()
+        finally:
+            db.session.close()
+
+    def update(self):
+        try:
+            db.session.commit()
+        except:
+            db.session.rollback()
+        finally:
+            db.session.close()
+
+    def delete(self):
+        try:
+            db.session.delete(self)
+            db.session.commit()
+        except:
+            db.session.rollback()
+        finally:
+            db.session.close()
