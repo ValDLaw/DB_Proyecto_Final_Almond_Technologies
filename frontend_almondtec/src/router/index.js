@@ -7,6 +7,25 @@ const routes = [
     name: "home",
     component: HomeView,
   },
+  {
+    path: "/login",
+    name: "Login",
+    component: () =>
+      import(/* webpackChunkName: "Login" */ "../views/Login.vue"),
+  },
+  {
+    path: "/signup",
+    name: "SignUp",
+    component: () =>
+      import(/* webpackChunkName: "SignUp" */ "../views/SignUp.vue"),
+  },
+  {
+    path: "/user",
+    name: "User",
+    props: true,
+    component: () =>
+      import(/* webpackChunkName: "TodosManager" */ "../views/User.vue"),
+  },
   //tutoriales
   //1
   {

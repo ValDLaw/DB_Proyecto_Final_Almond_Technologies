@@ -1,18 +1,24 @@
 <template>
-  <nav>
-    <router-link to="/">Cuenta </router-link> |
-    <router-link to="/tutoriales-main"> Tutoriales </router-link>|
-    <router-link to="/Beneficios-main"> Beneficios </router-link>|
-    <router-link to="/modelo-de-clases"> Modelo de clases </router-link>|
-    <router-link to="/tips-main"> Tips </router-link>|
-    <router-link to="/material-adicional"> Material adicional </router-link>|
-    <router-link to="/herramientas-digitales">
-      Herramientas digitales </router-link
-    >| <router-link to="/juegos-main"> Juegos </router-link>|
-    <router-link to="/login-is"> Salir </router-link>
-  </nav>
-  <router-view />
+  <the-navigation />
+  <router-view :key="$route.path" />
 </template>
+
+<script>
+import TheNavigation from "./components/TheNavigation.vue";
+import { auth } from "@/LoginService.js";
+
+export default {
+  name: "App",
+  components: {
+    TheNavigation,
+  },
+  data() {
+    return {
+      auth,
+    };
+  },
+};
+</script>
 
 <style>
 #app {
@@ -21,18 +27,5 @@
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-}
-
-nav {
-  padding: 30px;
-}
-
-nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
-
-nav a.router-link-exact-active {
-  color: #42b983;
 }
 </style>
