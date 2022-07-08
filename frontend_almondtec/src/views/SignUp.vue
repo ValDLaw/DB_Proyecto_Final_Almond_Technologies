@@ -49,6 +49,8 @@ export default {
         this.$router.push({
           name: "Login",
         });
+      } else {
+        auth.displayNotification(data["message"], "danger");
       }
     },
   },
