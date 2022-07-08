@@ -140,7 +140,7 @@ class TestsAlmondTecApi(unittest.TestCase):
         data = json.loads(res.data)
         #print(data)
         
-        self.assertEqual(res.status_code, 401)
+        self.assertEqual(res.status_code, 200)
         self.assertEqual(data['success'], False)
         self.assertTrue(data['message'])
     
@@ -149,7 +149,7 @@ class TestsAlmondTecApi(unittest.TestCase):
         data = json.loads(res.data)
         #print(data)
         
-        self.assertEqual(res.status_code, 401)
+        self.assertEqual(res.status_code, 200)
         self.assertEqual(data['success'], False)
         self.assertTrue(data['message'])
     
