@@ -100,7 +100,10 @@ def create_app(test_config=None):
             user_existe = Usuario.query.filter_by(email=email).first() #revisa si existe el user en la base de datos
             
             if not user_existe or not check_password_hash(user_existe.password, password):
-                abort(401)
+                return jsonify({
+                    'success': False,
+                    'message' : 'Datos incorrectos.'
+                })
             
             if user_existe and check_password_hash(user_existe.password, password):
                 error_401 = False
