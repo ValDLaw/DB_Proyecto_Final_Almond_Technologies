@@ -190,11 +190,45 @@ def create_app(test_config=None):
     def user(current_user):
         try:
             if current_user.rol == 'E':
-                current_user.cursos = EstudianteCurso.query.filter_by(estudiante_id=current_user.id)
-                return jsonify(current_user.format())
+                cursos_matriculados = EstudianteCurso.query.filter_by(estudiante_id=current_user.id).all()
+                return jsonify({
+                    'success': True,
+                    'student': current_user.id,
+                    'cursos_matriculados': cursos_matriculados,
+                    'total_cursos_matriculados': len(cursos_matriculados)
+                })
             else:
-                current_user.cursos = Curso.query.filter_by(profesor_id=current_user.id)
-                return jsonify(current_user.format())
+                cursos_dictados = Curso.query.filter_by(profesor_id=current_user.id).all()
+                return jsonify({
+                    'success': True,
+                    'profesor': current_user.id,
+                    'cursos_dictados': cursos_dictados,
+                    'total_cursos_dictados': len(cursos_dictados)
+                })
+        except Exception as e:
+            print(e)
+            abort(500)
+
+    @app.route("/matricular")
+    @token_required
+    def matricular(current_user):
+        error = False
+        try:
+            cursos_estudiante = EstudianteCurso.query.filter_by(estudiante_id = current_user.id)
+            cursos_inscritos =  []
+            cursos_disponibles = []
+            cursos_totales = Curso.query.all()
+            for curso in cursos_estudiante: cursos_inscritos.append(curso.curso_id)
+            for curso in cursos_totales:
+                if curso.id not in cursos_inscritos: cursos_disponibles.append(curso)
+                
+            return jsonify({
+                    'success': True,
+                    'profesor': current_user.id,
+                    'cursos_dictados': cursos_dictados,
+                    'total_cursos_dictados': len(cursos_dictados)
+                })
+
         except Exception as e:
             print(e)
             abort(500)

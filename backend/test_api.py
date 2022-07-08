@@ -25,6 +25,12 @@ class TestsAlmondTecApi(unittest.TestCase):
             self.permanent_user = Usuario(id=202110567, public_id=str(uuid.uuid4()), nombres='Sofía', apellidos='García', rol='E', email='sofia.garcia@utec.edu.pe',
                             password=generate_password_hash('$ClaveSegura123', method='sha256'))
             self.permanent_user.insert()
+            self.permanent_estudiante = Usuario(id=202110109, public_id=str(uuid.uuid4()), nombres='Valeria', apellidos='Espinoza', rol='E', email='valeria.espinoza@utec.edu.pe',
+                            password=generate_password_hash('$ClaveSegura567', method='sha256'))
+            self.permanent_estudiante.insert()
+            self.permanent_profesor = Usuario(id=202110567, public_id=str(uuid.uuid4()), nombres='Marvin', apellidos='Abisrror', rol='P', email='m.abisrror@utec.edu.pe',
+                            password=generate_password_hash('$ClaveSegura890', method='sha256'))
+            self.permanent_profesor.insert()
 
         self.good_user = {
             'id': 202110123,
@@ -86,6 +92,16 @@ class TestsAlmondTecApi(unittest.TestCase):
             'password': '$ClaveSegura123'
         }
 
+        self.estudiante_login = {
+            'email': 'valeria.espinoza@utec.edu.pe',
+            'password': '$ClaveSegura567'
+        }
+
+        self.profesor_login = {
+            'email': 'm.abisrror@utec.edu.pe',
+            'password': '$ClaveSegura890'
+        }
+
         self.user_login_badkey = {
             'email': 'sofia.garcia@utec.edu.pe',
             'password': 'abc'
@@ -96,18 +112,6 @@ class TestsAlmondTecApi(unittest.TestCase):
             'password': '$ClaveSegura123'
         }
 
-        self.new_profesor = {
-            'id': 123456,
-            'nombres': 'Marvin',
-            'apellidos': 'Abisrror',
-            }
-
-        self.new_estudiante = {
-            'id': 202110123,
-            'nombres': 'Sofía',
-            'apellidos': 'Quintana'
-            }
-        
         self.new_curso = {
             'id': 124,
             'nombre': 'Desarrollo Basado en Plataformas',
@@ -143,13 +147,10 @@ class TestsAlmondTecApi(unittest.TestCase):
         token = data0['token']
         res = self.client().get('/user', headers={'Content-Type': 'application/json', 'Authorization': token})
         data = json.loads(res.data)
-        print(data)
+        #print(data)
         
         self.assertEqual(res.status_code, 200)
-        self.assertTrue(data['email'])
-        self.assertTrue(data['nombres'])
-        self.assertTrue(data['apellidos'])
-        self.assertTrue(data['rol'])
+        self.assertEqual(data['success'], True)
 
     def test_login(self):
         res = self.client().post('/login', json=self.user_login)
@@ -254,6 +255,29 @@ class TestsAlmondTecApi(unittest.TestCase):
         self.assertEqual(res.status_code, 422)
         self.assertEqual(data['success'], False)
         self.assertTrue(data['message'])
+
+    def test_user_estudiante(self):
+        res0 = self.client().post('/login', json=self.user_login)
+        data0 = json.loads(res0.data)
+        token = data0['token']
+        res = self.client().get('/user', headers={'Content-Type': 'application/json', 'Authorization': token})
+        data = json.loads(res.data)
+        #print(data)
+        
+        self.assertEqual(res.status_code, 200)
+        self.assertEqual(data['success'], True)
+
+    def test_user_profesor(self):
+        res0 = self.client().post('/login', json=self.user_login)
+        data0 = json.loads(res0.data)
+        token = data0['token']
+        print(token)
+        res = self.client().get('/user', headers={'Content-Type': 'application/json', 'Authorization': token})
+        data = json.loads(res.data)
+        #print(data)
+        
+        self.assertEqual(res.status_code, 200)
+        self.assertEqual(data['success'], True)
     
     def tearDown(self):
         del self.good_user
