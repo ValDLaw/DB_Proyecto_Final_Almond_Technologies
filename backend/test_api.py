@@ -95,6 +95,31 @@ class TestsAlmondTecApi(unittest.TestCase):
             'email': 'sofia.garcia@gmail.com',
             'password': '$ClaveSegura123'
         }
+
+        self.new_profesor = {
+            'id': 123456,
+            'nombres': 'Marvin',
+            'apellidos': 'Abisrror',
+            }
+
+        self.new_estudiante = {
+            'id': 202110123,
+            'nombres': 'Sofía',
+            'apellidos': 'Quintana'
+            }
+        
+        self.new_curso = {
+            'id': 124,
+            'nombre': 'Desarrollo Basado en Plataformas',
+            'profesor_id': 123456
+            }
+        
+        self.new_extra = {
+            'nombre': 'Kahoot',
+            'tema': 'FLASK',
+            'curso_id': 'Desarrollo Basado en Plataformas',
+            'link': 'https://quizizz.com/join/quiz/6005c1ba7bff8b001d55cbeb/start?studentShare=true'
+            }
             
     def test_user_not_autheticated(self):
         res = self.client().get('/user')
@@ -118,7 +143,7 @@ class TestsAlmondTecApi(unittest.TestCase):
         token = data0['token']
         res = self.client().get('/user', headers={'Content-Type': 'application/json', 'Authorization': token})
         data = json.loads(res.data)
-        #print(data)
+        print(data)
         
         self.assertEqual(res.status_code, 200)
         self.assertTrue(data['email'])
@@ -231,4 +256,13 @@ class TestsAlmondTecApi(unittest.TestCase):
         self.assertTrue(data['message'])
     
     def tearDown(self):
-        pass
+        del self.good_user
+        del self.bad_code
+        del self.bad_email
+        del self.repeated_code
+        del self.repeated_email
+        del self.bad_password
+        del self.incomplete_user
+        del self.user_login
+        del self.user_login_badkey
+        del self.user_login_bademail

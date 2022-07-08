@@ -12,7 +12,7 @@ from flask import (
 
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_cors import CORS
-from models import setup_db, Usuario
+from models import setup_db, Usuario, Estudiante, Profesor, ProfesorEstudiante, Curso, EstudianteCurso, Extra
 
 from functools import wraps
 import uuid
@@ -41,7 +41,7 @@ def password_check(password):
 
 def create_app(test_config=None):
     app = Flask(__name__)
-    database_name = 'almond_tec_test'
+    database_name = 'almond_tec'
     database_path = 'postgresql://{}@{}/{}'.format('postgres:abc', 'localhost:5432', database_name)
     setup_db(app, database_path)
 
@@ -186,7 +186,12 @@ def create_app(test_config=None):
     @token_required
     def user(current_user):
         try:
-            return jsonify(current_user.format())
+            if current_user.rol == 'E':
+                current_user.cursos = EstudianteCurso.query.filter_by(estudiante_id=current_user.id)
+                return jsonify(current_user.format())
+            else:
+                current_user.cursos = Curso.query.filter_by(profesor_id=current_user.id)
+                return jsonify(current_user.format())
         except Exception as e:
             print(e)
             abort(500)
