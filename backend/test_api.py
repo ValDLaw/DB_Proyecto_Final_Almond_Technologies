@@ -143,7 +143,7 @@ class TestsAlmondTecApi(unittest.TestCase):
         token = data0['token']
         res = self.client().get('/user', headers={'Content-Type': 'application/json', 'Authorization': token})
         data = json.loads(res.data)
-        print(data)
+        #print(data)
         
         self.assertEqual(res.status_code, 200)
         self.assertTrue(data['email'])
@@ -255,6 +255,16 @@ class TestsAlmondTecApi(unittest.TestCase):
         self.assertEqual(data['success'], False)
         self.assertTrue(data['message'])
     
+    def test_logout(self):
+        res = self.client().post('/logout')
+        data = json.loads(res.data)
+        #print(data)
+
+        self.assertEqual(res.status_code, 200)
+        self.assertEqual(data['success'], False)
+        self.assertTrue(data['message'])
+
+
     def tearDown(self):
         del self.good_user
         del self.bad_code
