@@ -5,8 +5,9 @@ import uuid
 
 from flask_login import current_user
 from requests import head
+#from backend.models import Curso, Extra
 from server import create_app
-from models import setup_db, Usuario
+from models import setup_db, Usuario, Estudiante, Profesor, Curso, Extra
 import json
 from werkzeug.security import generate_password_hash, check_password_hash
 
@@ -21,10 +22,27 @@ class TestsAlmondTecApi(unittest.TestCase):
 
         setup_db(self.app, self.database_path) #de models.py
 
-        if not Usuario.query.filter_by(id=202110567).first():
-            self.permanent_user = Usuario(id=202110567, public_id=str(uuid.uuid4()), nombres='Sofía', apellidos='García', rol='E', email='sofia.garcia@utec.edu.pe',
+        if not Usuario.query.filter_by(id=202110123).first():
+            self.permanent_user1 = Usuario(id=202110123, public_id=str(uuid.uuid4()), nombres='Sofía', apellidos='García', rol='E', email='sofia.garcia@utec.edu.pe',
                             password=generate_password_hash('$ClaveSegura123', method='sha256'))
-            self.permanent_user.insert()
+            self.permanent_user1.insert()
+            self.permanent_estudiante = Estudiante(id=202110123, nombres='Sofía', apellidos='García')
+            self.permanent_estudiante.insert()
+
+        if not Usuario.query.filter_by(id=202110109).first():    
+            self.permanent_user2 = Usuario(id=202110109, public_id=str(uuid.uuid4()), nombres='Valeria', apellidos='Espinoza', rol='E', email='valeria.espinoza@utec.edu.pe',
+                                password=generate_password_hash('$ClaveSegura567', method='sha256'))
+            self.permanent_user2.insert()
+
+            self.permanent_estudiante = Estudiante(id=202110109, nombres='Valeria', apellidos='Espinoza')
+            self.permanent_estudiante.insert()
+
+        if not Usuario.query.filter_by(id=202120567).first():
+            self.permanent_user3 = Usuario(id=202120567, public_id=str(uuid.uuid4()), nombres='Marvin', apellidos='Abisrror', rol='P', email='m.abisrror@utec.edu.pe',
+                                password=generate_password_hash('$ClaveSegura890', method='sha256'))
+            self.permanent_user3.insert()
+            self.permanent_profesor = Profesor(id=202120567, nombres='Marvin', apellidos='Abisrror')
+            self.permanent_profesor.insert()
 
         self.good_user = {
             'id': 202110123,
@@ -51,7 +69,7 @@ class TestsAlmondTecApi(unittest.TestCase):
         }
         
         self.repeated_code = {
-            'id': 202110567,
+            'id': 202110109,
             'nombres': 'Luisa',
             'apellidos': 'Mora',
             'email': 'luisa.mora@utec.edu.pe',
@@ -59,7 +77,7 @@ class TestsAlmondTecApi(unittest.TestCase):
         }
 
         self.repeated_email = {
-            'id': 202110560,
+            'id': 202110123,
             'nombres': 'Luisa',
             'apellidos': 'Mora',
             'email': 'sofia.garcia@utec.edu.pe',
@@ -86,6 +104,16 @@ class TestsAlmondTecApi(unittest.TestCase):
             'password': '$ClaveSegura123'
         }
 
+        self.estudiante_login = {
+            'email': 'valeria.espinoza@utec.edu.pe',
+            'password': '$ClaveSegura567'
+        }
+
+        self.profesor_login = {
+            'email': 'm.abisrror@utec.edu.pe',
+            'password': '$ClaveSegura890'
+        }
+
         self.user_login_badkey = {
             'email': 'sofia.garcia@utec.edu.pe',
             'password': 'abc'
@@ -96,18 +124,6 @@ class TestsAlmondTecApi(unittest.TestCase):
             'password': '$ClaveSegura123'
         }
 
-        self.new_profesor = {
-            'id': 123456,
-            'nombres': 'Marvin',
-            'apellidos': 'Abisrror',
-            }
-
-        self.new_estudiante = {
-            'id': 202110123,
-            'nombres': 'Sofía',
-            'apellidos': 'Quintana'
-            }
-        
         self.new_curso = {
             'id': 124,
             'nombre': 'Desarrollo Basado en Plataformas',
@@ -115,7 +131,7 @@ class TestsAlmondTecApi(unittest.TestCase):
             }
         
         self.new_extra = {
-            'nombre': 'Kahoot',
+            'nombre': 'Kahoot FLASK',
             'tema': 'FLASK',
             'curso_id': 'Desarrollo Basado en Plataformas',
             'link': 'https://quizizz.com/join/quiz/6005c1ba7bff8b001d55cbeb/start?studentShare=true'
@@ -137,8 +153,21 @@ class TestsAlmondTecApi(unittest.TestCase):
         self.assertEqual(data['success'], False)
         self.assertTrue(data['message'])
 
-    def test_user_authenticated(self):
-        res0 = self.client().post('/login', json=self.user_login)
+    def test_estudiante_authenticated(self):
+        res0 = self.client().post('/login', json=self.estudiante_login)
+        data0 = json.loads(res0.data)
+        token = data0['token']
+        res = self.client().get('/user', headers={'Content-Type': 'application/json', 'Authorization': token})
+        data = json.loads(res.data)
+        print(data)
+        
+        self.assertEqual(res.status_code, 200)
+        self.assertTrue(data['nombres'])
+        self.assertTrue(data['apellidos'])
+        self.assertEqual(data['rol'], 'estudiante')
+
+    def test_profesor_authenticated(self):
+        res0 = self.client().post('/login', json=self.profesor_login)
         data0 = json.loads(res0.data)
         token = data0['token']
         res = self.client().get('/user', headers={'Content-Type': 'application/json', 'Authorization': token})
@@ -146,10 +175,9 @@ class TestsAlmondTecApi(unittest.TestCase):
         #print(data)
         
         self.assertEqual(res.status_code, 200)
-        self.assertTrue(data['email'])
         self.assertTrue(data['nombres'])
         self.assertTrue(data['apellidos'])
-        self.assertTrue(data['rol'])
+        self.assertEqual(data['rol'], 'profesor')
 
     def test_login(self):
         res = self.client().post('/login', json=self.user_login)
@@ -254,6 +282,21 @@ class TestsAlmondTecApi(unittest.TestCase):
         self.assertEqual(res.status_code, 422)
         self.assertEqual(data['success'], False)
         self.assertTrue(data['message'])
+
+    def test_extras_get_success(self):
+        res = self.client().get("/extras")
+        data = res.get_json()
+        self.assertEqual(res.status_code, 200)
+        self.assertTrue(data.get("success"))
+        extras = data.get("extras")
+        if len(extras) > 0:
+            self.assertTrue(extras)
+            self.assertEqual(len(extras), data.get("total_extras"))
+            self.assertGreater(len(extras), 0)
+        else:
+            self.assertFalse(extras)
+            self.assertEqual(len(extras), data.get("total_extras"))
+            self.assertEqual(len(extras), 0)
     
     def test_logout(self):
         res = self.client().post('/logout')
@@ -266,13 +309,13 @@ class TestsAlmondTecApi(unittest.TestCase):
 
 
     def tearDown(self):
-        del self.good_user
-        del self.bad_code
-        del self.bad_email
-        del self.repeated_code
-        del self.repeated_email
-        del self.bad_password
-        del self.incomplete_user
-        del self.user_login
-        del self.user_login_badkey
-        del self.user_login_bademail
+        for user in Usuario.query.all():
+            user.delete()
+        for estudiante in Estudiante.query.all():
+            estudiante.delete()
+        for profesor in Profesor.query.all():
+            profesor.delete()
+        for curso in Curso.query.all():
+            curso.delete()
+        for extra in Extra.query.all():
+            extra.delete()
