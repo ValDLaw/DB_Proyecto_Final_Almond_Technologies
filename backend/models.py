@@ -84,27 +84,22 @@ class Estudiante(db.Model):
     profesores = db.relationship('Profesor', secondary = 'profesores_estudiantes', lazy = 'dynamic')
     cursos = db.relationship('Curso', secondary = 'estudiantes_cursos', lazy = 'dynamic') # Relacion many
 
-    def __init__ (self, id, nombres, apellidos, profesores, cursos):
+    def __init__ (self, id, nombres, apellidos):
         self.id = id
         self.nombres = nombres
         self.apellidos = apellidos
-        self.profesores = profesores
-        self.cursos = cursos
 
     def format(self):
         return {
             'id': self.id,
             'nombres': self.nombres,
             'apellidos': self.apellidos,
-            'profesores': self.profesores,
-            'cursos': self.cursos,
             'rol': 'estudiante'
         }
 
     def __repr__(self):
-        return 'Estudiante: id={}, nombres={}, apellidos={}, profesores={}, cursos={}'.format(
-            self.id, self.nombres, self.apellidos, self.profesores, self.cursos)
-
+        return 'Estudiante: id={}, nombres={}, apellidos={}'.format(
+            self.id, self.nombres, self.apellidos)
     
     def insert(self):
         try:
@@ -142,26 +137,22 @@ class Profesor(db.Model):
     cursos = db.relationship('Curso', backref='profesores')
     estudiantes = db.relationship('Estudiante', secondary = 'profesores_estudiantes', overlaps="profesores")
 
-    def __init__ (self, id, nombres, apellidos, cursos, estudiantes):
+    def __init__ (self, id, nombres, apellidos):
         self.id = id
         self.nombres = nombres
         self.apellidos = apellidos
-        self.cursos = cursos
-        self.estudiantes = estudiantes
 
     def format(self):
         return {
             'id': self.id,
             'nombres': self.nombres,
             'apellidos': self.apellidos,
-            'cursos': self.cursos,
-            'estudiantes': self.estudiantes,
             'rol': 'profesor'
         }
 
     def __repr__(self):
-        return 'Profesor: id={}, nombres={}, apellidos={}, cursos={}, estudiantes={}'.format(
-            self.id, self.nombres, self.apellidos, self.cursos, self.estudiantes)
+        return 'Profesor: id={}, nombres={}, apellidos={}'.format(
+            self.id, self.nombres, self.apellidos)
             
     
     def insert(self):

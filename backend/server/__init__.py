@@ -191,12 +191,13 @@ def create_app(test_config=None):
         try:
             if current_user.rol == 'E':
                 print("Es estudiante")
+                print(current_user.id)
                 estudiante = Estudiante.query.filter(Estudiante.id == current_user.id).one_or_none()
-                return estudiante.format()
+                return jsonify(estudiante.format())
             else:
                 print("Es profesor")
                 profesor = Profesor.query.filter(Profesor.id == current_user.id).one_or_none()
-                return profesor.format()
+                return jsonify(profesor.format())
         except Exception as e:
             print(e)
             abort(500)
@@ -269,7 +270,7 @@ def create_app(test_config=None):
         extras = Extra.query.all()
         return jsonify({
             "success" : True,
-            "comments" : [extra.JSONSerialize() for extra in extras],
+            "extras" : [extra.JSONSerialize() for extra in extras],
             "total_extras" : len(extras)
         })
 
