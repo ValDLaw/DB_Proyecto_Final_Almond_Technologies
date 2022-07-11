@@ -26,6 +26,13 @@ const routes = [
     component: () =>
       import(/* webpackChunkName: "TodosManager" */ "../views/User.vue"),
   },
+  {
+    path: "/logout",
+    name: "Logout",
+    props: true,
+    component: () =>
+      import(/* webpackChunkName: "TodosManager" */ "../views/Logout.vue"),
+  },
   //tutoriales
   //1
   {

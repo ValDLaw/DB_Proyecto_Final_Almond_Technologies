@@ -362,6 +362,16 @@ class TestsAlmondTecApi(unittest.TestCase):
         self.assertFalse(data.get("success"))
         self.assertEqual(data.get("message"), "not found")
     
+    def test_logout(self):
+        res = self.client().post('/logout')
+        data = json.loads(res.data)
+        #print(data)
+
+        self.assertEqual(res.status_code, 200)
+        self.assertEqual(data['success'], False)
+        self.assertTrue(data['message'])
+
+
     def tearDown(self):
         for user in Usuario.query.all():
             user.delete()

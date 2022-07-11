@@ -9,11 +9,7 @@
     <section class="extras">
       <h2>Top extras in {{ curso.nombre }}</h2>
       <div class="cards">
-        <div
-          v-for="extra in curso.extras"
-          :key="extra.tema"
-          class="card"
-        >
+        <div v-for="extra in curso.extras" :key="extra.tema" class="card">
           <router-link
             :to="{
               name: 'ExtraDetails',
@@ -36,8 +32,6 @@
 </template>
 
 <script>
-
-
 export default {
   name: "CursosDetails",
   data() {
@@ -51,7 +45,7 @@ export default {
   },
   computed: {
     cursos() {
-      return db.cursos.find((c) => c.id === this.slug);
+      return {}; //db.cursos.find((c) => c.id === this.slug);
     },
   },
   beforeCreate() {},

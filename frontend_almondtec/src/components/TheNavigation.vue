@@ -13,6 +13,7 @@
       <router-link to="/herramientas-digitales">
         Herramientas digitales </router-link
       >| <router-link to="/juegos-main"> Juegos </router-link>|
+      <router-link :to="{ name: 'Logout' }"> Logout </router-link>
     </div>
   </nav>
 </template>

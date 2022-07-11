@@ -1,6 +1,8 @@
+from ast import expr_context
 from asyncio.subprocess import SubprocessStreamProtocol
 from distutils.log import error
 import json
+from lib2to3.pgen2 import token
 import re
 
 from flask import (
@@ -9,6 +11,7 @@ from flask import (
     jsonify,
     request
 )
+from sqlalchemy import null
 
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_cors import CORS
@@ -334,6 +337,15 @@ def create_app(test_config=None):
             "success" : True,
             "extra_nombre" : extra_nombre
         })
+    
+    @app.route ('/logout', methods=['POST'])
+    @token_required
+    def logout(current_user):
+        try:
+            current_user.token = None
+        except Exception as e:
+            print(e)
+            abort(500)
     
     '''
     @app.route("/comments/<estudiante_id>", methods = ["PATCH"])
