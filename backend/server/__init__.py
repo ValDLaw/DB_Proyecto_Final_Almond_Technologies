@@ -184,55 +184,194 @@ def create_app(test_config=None):
                 abort(422)
             print(e)
             abort(500)
-    
+    #valeria.espinoza@utec.edu.pe
     @app.route('/user', methods=['GET'])
     @token_required
     def user(current_user):
         try:
             if current_user.rol == 'E':
-                cursos_matriculados = EstudianteCurso.query.filter_by(estudiante_id=current_user.id).all()
-                return jsonify({
-                    'success': True,
-                    'student': current_user.id,
-                    'cursos_matriculados': cursos_matriculados,
-                    'total_cursos_matriculados': len(cursos_matriculados)
-                })
+                print("Es estudiante")
+                estudiante = Estudiante.query.filter(Estudiante.id == current_user.id).one_or_none()
+                return estudiante.format()
             else:
-                cursos_dictados = Curso.query.filter_by(profesor_id=current_user.id).all()
-                return jsonify({
-                    'success': True,
-                    'profesor': current_user.id,
-                    'cursos_dictados': cursos_dictados,
-                    'total_cursos_dictados': len(cursos_dictados)
-                })
+                print("Es profesor")
+                profesor = Profesor.query.filter(Profesor.id == current_user.id).one_or_none()
+                return profesor.format()
         except Exception as e:
             print(e)
             abort(500)
 
-    @app.route("/matricular")
+
+    @app.route("/cursos/<curso_id>", methods=["GET"])
+    def get_curso(curso_id):
+        curso = Curso.query.filter(Curso.id == curso_id).one_or_none()
+        if curso is None:
+            abort(404, description="No se ha encontrado el curso.")
+        return jsonify({
+            "success" : True,
+            "curso" : curso_id,
+            "curso" : curso.format()
+        })
+
+    @app.route("/matricular/<curso_id>", methods = ["POST"])
     @token_required
-    def matricular(current_user):
-        error = False
+    def create_curso(current_user, curso_id):
+        error_404 = False
         try:
-            cursos_estudiante = EstudianteCurso.query.filter_by(estudiante_id = current_user.id)
-            cursos_inscritos =  []
-            cursos_disponibles = []
-            cursos_totales = Curso.query.all()
-            for curso in cursos_estudiante: cursos_inscritos.append(curso.curso_id)
-            for curso in cursos_totales:
-                if curso.id not in cursos_inscritos: cursos_disponibles.append(curso)
-                
+            curso = Curso.query.filter(Curso.id == curso_id).one_or_none()
+            if curso is None:
+                error_404 = True
+                abort(404)
+            
+            curso_matriculado = EstudianteCurso(curso_id = curso_id, estudiante_id = current_user.id)
+            curso_id = curso_matriculado.insert()
+
             return jsonify({
-                    'success': True,
-                    'profesor': current_user.id,
-                    'cursos_dictados': cursos_dictados,
-                    'total_cursos_dictados': len(cursos_dictados)
-                })
+            "success" : True,
+            "curso_matriculado_id" : curso_id,
+            "curso_matriculado" : curso
+        })
 
         except Exception as e:
+            if error_404:
+                abort(404)
             print(e)
             abort(500)
     
+    @app.route("/abandonar/<curso_id>", methods = ["DELETE"])
+    @token_required
+    def delete_curso(current_user, curso_id):
+        error_404 = False
+        try:
+            curso = Curso.query.filter(Curso.id == curso_id).one_or_none()
+            if curso is None:
+                error_404 = True
+                abort(404)
+            
+            curso_abandonado = EstudianteCurso.query.filter(Curso.id == curso_id).one_or_none()
+            curso_abandonado.delete()
+
+            return jsonify({
+            "success" : True,
+            "curso_abandonado_id" : curso_id,
+            "curso_abandonado" : curso
+        })
+
+        except Exception as e:
+            if error_404:
+                abort(404)
+            print(e)
+            abort(500)
+
+    #---------- EXTRAS ---------
+    @app.route("/extras", methods=["GET"])
+    def get_extras():
+        extras = Extra.query.all()
+        return jsonify({
+            "success" : True,
+            "comments" : [extra.JSONSerialize() for extra in extras],
+            "total_extras" : len(extras)
+        })
+
+    @app.route("/extras/<extra_nombre>", methods=["GET"])
+    def get_extra(extra_nombre):
+        extra = Extra.query.filter(Extra.nombre == extra_nombre).one_or_none()
+        if extra is None:
+            abort(404, description="No se ha encontrado el extra.")
+        return jsonify({
+            "success" : True,
+            "extra" : extra.format()
+        })
+
+    @app.route("/cursos/<curso_id>/extras", methods=["POST"])
+    def create_extra(curso_id):
+        curso = Curso.query.filter(Curso.id == curso_id).one_or_none()
+
+        if curso is None:
+            abort(404, description = "No se ha encontrado el curso.")
+
+        body = request.get_json()
+        nombre = body.get("nombre", None)
+        tema = body.get("tema", None)
+        curso_id = body.get("curso_id", None)
+        link = body.get("link", None)
+        
+        extra = Extra(nombre = nombre, tema = tema, curso_id = curso_id, link = link)
+        extra_nombre = extra.insert()
+
+        return jsonify({
+            "success" : True,
+            "extra_nombre" : extra_nombre
+        })
+
+    @app.route("/extras/<extra_nombre>", methods = ["PATCH"])
+    def update_extra(extra_nombre):
+        extra = Extra.query.filter(Extra.nombre == extra_nombre).one_or_none()
+
+        if extra is None:
+            abort(404, description = "No se ha encontrado el extra.")
+
+        body = request.get_json()
+
+        if "link" in body:
+            extra.link = body.get("link")
+        
+        extra.update()
+
+        return jsonify({
+            "success" : True,
+            "extra_nombre" : extra_nombre
+        })
+
+    @app.route("/extras/<extra_nombre>", methods = ["DELETE"])
+    def delete_extra(extra_nombre):
+        extra = Extra.query.filter(Extra.nombre == extra_nombre).one_or_none()
+
+        if extra is None:
+            abort(404, description = "No se ha encontrado el extra.")
+
+        extra.delete()
+
+        return jsonify({
+            "success" : True,
+            "extra_nombre" : extra_nombre
+        })
+    
+    '''
+    @app.route("/comments/<estudiante_id>", methods = ["PATCH"])
+    @token_required
+    def update_student(current_user, estudiante_id):
+        error_404 = False
+
+        try:
+            estudiante = Estudiante.query.filter(Estudiante.id == estudiante_id).one_or_none()
+            if estudiante is None:
+                error_404 = True
+                abort(404)
+
+            body = request.get_json()
+            if 'cursos' in body:
+                estudiante.cursos = body.get('cursos')
+
+            cursos_estudiante = EstudianteCurso.query.filter_by(estudiante_id = current_user.id)
+            cursos_inscritos_id =  []
+            for curso in cursos_estudiante: cursos_inscritos_id.append(curso.curso_id)
+            cursos_totales = Curso.query.all()
+            cursos_inscritos =  []
+            for curso in cursos_totales:
+                if curso.id in cursos_inscritos_id: cursos_inscritos.append(curso)
+
+        except:
+            if error_404:
+                abort(404)
+            else:
+                abort(500)
+        
+        lists = {list.id: {'id': list.id, 'name': list.name} for list in TodoLists.query.order_by('id').all()}
+            if len(lists) == 0:
+                abort(404)'''
+
+
     #---------------ERROR HANDLING---------------
    
     @app.errorhandler(404)

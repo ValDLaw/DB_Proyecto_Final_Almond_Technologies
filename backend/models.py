@@ -97,7 +97,8 @@ class Estudiante(db.Model):
             'nombres': self.nombres,
             'apellidos': self.apellidos,
             'profesores': self.profesores,
-            'cursos': self.cursos
+            'cursos': self.cursos,
+            'rol': 'estudiante'
         }
 
     def __repr__(self):
@@ -154,7 +155,8 @@ class Profesor(db.Model):
             'nombres': self.nombres,
             'apellidos': self.apellidos,
             'cursos': self.cursos,
-            'estudiantes': self.estudiantes
+            'estudiantes': self.estudiantes,
+            'rol': 'profesor'
         }
 
     def __repr__(self):
@@ -321,7 +323,7 @@ class EstudianteCurso(db.Model):
         try:
             db.session.add(self)
             db.session.commit()
-            return self.id
+            return self.curso_id
         except:
             db.session.rollback()
         finally:
@@ -374,7 +376,7 @@ class Extra(db.Model):
         try:
             db.session.add(self)
             db.session.commit()
-            return self.id
+            return self.nombre
         except:
             db.session.rollback()
         finally:
