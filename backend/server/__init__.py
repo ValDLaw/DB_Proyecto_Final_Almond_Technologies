@@ -190,16 +190,13 @@ def create_app(test_config=None):
     def user(current_user):
         try:
             if current_user.rol == 'E':
-                print("Es estudiante")
-                print(current_user.id)
                 estudiante = Estudiante.query.filter(Estudiante.id == current_user.id).one_or_none()
                 return jsonify(estudiante.format())
             else:
-                print("Es profesor")
                 profesor = Profesor.query.filter(Profesor.id == current_user.id).one_or_none()
                 return jsonify(profesor.format())
         except Exception as e:
-            print(e)
+            #print(e)
             abort(500)
 
 
@@ -310,7 +307,7 @@ def create_app(test_config=None):
         extra = Extra.query.filter(Extra.nombre == extra_nombre).one_or_none()
 
         if extra is None:
-            abort(404, description = "No se ha encontrado el extra.")
+            abort(404)
 
         body = request.get_json()
 

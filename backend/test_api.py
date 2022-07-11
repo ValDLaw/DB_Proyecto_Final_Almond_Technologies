@@ -43,6 +43,9 @@ class TestsAlmondTecApi(unittest.TestCase):
             self.permanent_user3.insert()
             self.permanent_profesor = Profesor(id=202120567, nombres='Marvin', apellidos='Abisrror')
             self.permanent_profesor.insert()
+        if not Curso.query.filter_by(id=124).first():
+            self.permanent_curso = Curso(id=124, nombre='Desarrollo Basado en Plataformas', profesor_id=202120567)
+            self.permanent_curso.insert()
 
         self.good_user = {
             'id': 202110123,
@@ -131,10 +134,10 @@ class TestsAlmondTecApi(unittest.TestCase):
             }
         
         self.new_extra = {
-            'nombre': 'Kahoot FLASK',
-            'tema': 'FLASK',
-            'curso_id': 'Desarrollo Basado en Plataformas',
-            'link': 'https://quizizz.com/join/quiz/6005c1ba7bff8b001d55cbeb/start?studentShare=true'
+            'nombre': 'Extra test',
+            'tema': 'BLACKPINK',
+            'curso_id': self.permanent_curso.id,
+            'link': 'https://www.youtube.com/channel/UCOmHUn--16B90oW2L6FRR3A'
             }
             
     def test_user_not_autheticated(self):
@@ -159,7 +162,7 @@ class TestsAlmondTecApi(unittest.TestCase):
         token = data0['token']
         res = self.client().get('/user', headers={'Content-Type': 'application/json', 'Authorization': token})
         data = json.loads(res.data)
-        print(data)
+        #print(data)
         
         self.assertEqual(res.status_code, 200)
         self.assertTrue(data['nombres'])
@@ -172,7 +175,7 @@ class TestsAlmondTecApi(unittest.TestCase):
         token = data0['token']
         res = self.client().get('/user', headers={'Content-Type': 'application/json', 'Authorization': token})
         data = json.loads(res.data)
-        print(data)
+        #print(data)
         
         self.assertEqual(res.status_code, 200)
         self.assertTrue(data['nombres'])
@@ -297,6 +300,67 @@ class TestsAlmondTecApi(unittest.TestCase):
             self.assertFalse(extras)
             self.assertEqual(len(extras), data.get("total_extras"))
             self.assertEqual(len(extras), 0)
+
+    def test_comment_extra_failure(self):
+        res = self.client().get("/extras/'no existe'")
+        data = res.get_json()
+
+        self.assertEqual(res.status_code,404)
+        self.assertFalse(data.get("success"))
+        self.assertEqual(data.get("message"), "not found")
+
+    def test_extra_post_success(self):
+        #json = {"curso_id": self.permanent_curso.id, "nombre":"This extra is a try", "link": "https://www.youtube.com/channel/UCOmHUn--16B90oW2L6FRR3A", "tema": "BLACKPINK"}
+        res = self.client().post("/cursos/" + str(self.permanent_curso.id) + "/extras", json=self.new_extra)
+        data = res.get_json()
+        #print(data)
+        self.assertEqual(res.status_code, 200)
+        self.assertTrue(data.get("success"))
+        self.assertTrue(data.get("extra_nombre"))
+        
+    def test_extra_post_failure(self):
+        res = self.client().post("/cursos/-12312123/extras", json = {})
+        data = res.get_json()
+
+        self.assertEqual(res.status_code, 404)
+        self.assertFalse(data.get("success"))
+        self.assertEqual(data.get("message"),"not found")
+
+    def test_extra_update_success(self):
+        # Create an extra for testing purposes
+        self.client().post("/cursos/" + str(self.permanent_curso.id) + "/extras", json=self.new_extra)
+
+        res = self.client().patch("/extras/"+str(self.new_extra['nombre']), json={"link":"https://www.youtube.com/c/LilifilmOfficial_BLACKPINK"})
+        data = res.get_json()
+
+        self.assertEqual(res.status_code, 200)
+        self.assertTrue(data.get("extra_nombre"))
+
+    def test_extra_update_failure(self):
+        res = self.client().patch("extras/'no existe'")
+        data = res.get_json()
+
+        self.assertEqual(res.status_code, 404)
+        self.assertFalse(data.get("success"))
+        self.assertEqual(data.get("message"), "not found")
+        
+    def test_extra_delete_success(self):
+        # Create a comment for testing purposes
+        self.client().post("/cursos/" + str(self.permanent_curso.id) + "/extras", json=self.new_extra)
+
+        res = self.client().delete("/extras/"+ str(self.new_extra['nombre']))
+        data = res.get_json()
+        
+        self.assertEqual(res.status_code, 200)
+        self.assertTrue(data.get("extra_nombre"))
+
+    def test_extra_delete_failure(self):
+        res = self.client().delete("/extras/'no existe'")
+        data = res.get_json()
+
+        self.assertEqual(res.status_code,404)
+        self.assertFalse(data.get("success"))
+        self.assertEqual(data.get("message"), "not found")
     
     def tearDown(self):
         for user in Usuario.query.all():

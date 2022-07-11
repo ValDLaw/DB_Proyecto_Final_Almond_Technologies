@@ -242,25 +242,21 @@ class Curso(db.Model):
     extras = db.relationship('Extra', backref='cursos')
     estudiantes = db.relationship('Estudiante', secondary = 'estudiantes_cursos', lazy = 'dynamic', overlaps='cursos')
 
-    def __init__ (self, id, nombre, profesor_id, extras, estudiantes):
+    def __init__ (self, id, nombre, profesor_id):
         self.id = id
         self.nombre = nombre
         self.profesor_id = profesor_id
-        self.extras = extras
-        self.estudiantes = estudiantes
 
     def format(self):
         return {
             'id': self.id,
             'nombre': self.nombre,
-            'profesor_id': self.profesor_id,
-            'extras': self.extras,
-            'estudiantes': self.estudiantes
+            'profesor_id': self.profesor_id
         }
 
     def __repr__(self):
-        return 'Curso: id={}, nombre={}, profesor_id={}, extras={}, estudiantes={}'.format(
-            self.id, self.nombre, self.profesor_id, self.extras, self.estudiantes)
+        return 'Curso: id={}, nombre={}, profesor_id={}'.format(
+            self.id, self.nombre, self.profesor_id)
     
     def insert(self):
         try:
