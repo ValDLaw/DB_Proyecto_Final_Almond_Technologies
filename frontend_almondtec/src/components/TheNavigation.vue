@@ -1,8 +1,10 @@
 <template>
   <nav>
-    <router-link to="/">Home</router-link> |
-    <router-link :to="{ name: 'Login' }"> Login </router-link>|
-    <router-link :to="{ name: 'SignUp' }"> Sign Up </router-link>
+    <router-link to="/">Home</router-link>
+    <div v-if="auth.authorized == false">
+      <router-link :to="{ name: 'Login' }"> Login </router-link>|
+      <router-link :to="{ name: 'SignUp' }"> Sign Up </router-link>
+    </div>
     <div v-if="auth.authorized">
       <router-link :to="{ name: 'User' }"> Perfil </router-link>|
       <router-link to="/tutoriales-main"> Tutoriales </router-link>|

@@ -1,5 +1,6 @@
 import { createRouter, createWebHashHistory } from "vue-router";
 import HomeView from "../views/HomeView.vue";
+import { auth } from "@/LoginService";
 
 const routes = [
   {
@@ -29,6 +30,7 @@ const routes = [
   {
     path: "/user",
     name: "User",
+    meta: { ifAuth: true },
     props: true,
     component: () =>
       import(/* webpackChunkName: "TodosManager" */ "../views/User.vue"),
@@ -36,6 +38,7 @@ const routes = [
   {
     path: "/cursos/:curso_id",
     name: "Cursos",
+    meta: { ifAuth: true },
     props: true,
     component: () =>
       import(
@@ -45,12 +48,14 @@ const routes = [
   {
     path: "/matricular",
     name: "Matricular",
+    meta: { ifAuth: true },
     component: () =>
       import(/* webpackChunkName: "SignUp" */ "../views/site/Matricular.vue"),
   },
   {
     path: "/logout",
     name: "Logout",
+    meta: { ifAuth: true },
     props: true,
     component: () =>
       import(/* webpackChunkName: "TodosManager" */ "../views/Logout.vue"),
@@ -61,6 +66,7 @@ const routes = [
   {
     path: "/apps-organizacionales-tutoriales",
     name: "apps-organizacionales-tutoriales",
+    meta: { ifAuth: true },
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
@@ -73,6 +79,7 @@ const routes = [
   {
     path: "/pizarras-virtuales-tutoriales",
     name: "pizarras-virtuales-tutoriales",
+    meta: { ifAuth: true },
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
@@ -85,6 +92,7 @@ const routes = [
   {
     path: "/plataformas-virtuales-tutoriales",
     name: "plataformas-virtuales-tutoriales",
+    meta: { ifAuth: true },
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
@@ -97,6 +105,7 @@ const routes = [
   {
     path: "/videoconferencias-tutoriales",
     name: "videoconferencias-tutoriales",
+    meta: { ifAuth: true },
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
@@ -110,6 +119,7 @@ const routes = [
   {
     path: "/apps-participativa-ma",
     name: "apps-participativa-ma",
+    meta: { ifAuth: true },
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
@@ -122,6 +132,7 @@ const routes = [
   {
     path: "/apps-temas-especificos-ma",
     name: "apps-temas-especificos-ma",
+    meta: { ifAuth: true },
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
@@ -136,6 +147,7 @@ const routes = [
   {
     path: "/apps-organizacionales-hd",
     name: "apps-organizacionales-hd",
+    meta: { ifAuth: true },
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
@@ -148,6 +160,7 @@ const routes = [
   {
     path: "/pizarras-virtuales-hd",
     name: "pizarras-virtuales-hd",
+    meta: { ifAuth: true },
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
@@ -160,6 +173,7 @@ const routes = [
   {
     path: "/plataformas-virtuales-hd",
     name: "plataformas-virtuales-hd",
+    meta: { ifAuth: true },
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
@@ -172,6 +186,7 @@ const routes = [
   {
     path: "/videoconferencias-hd",
     name: "videoconferencias-hd",
+    meta: { ifAuth: true },
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
@@ -186,6 +201,7 @@ const routes = [
   {
     path: "/Beneficios-main",
     name: "Beneficios-main",
+    meta: { ifAuth: true },
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
@@ -198,6 +214,7 @@ const routes = [
   {
     path: "/herramientas-digitales",
     name: "herramientas-digitales",
+    meta: { ifAuth: true },
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
@@ -210,6 +227,7 @@ const routes = [
   {
     path: "/juegos-main",
     name: "juegos-main",
+    meta: { ifAuth: true },
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
@@ -220,6 +238,7 @@ const routes = [
   {
     path: "/material-adicional",
     name: "material-adicional",
+    meta: { ifAuth: true },
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
@@ -232,6 +251,7 @@ const routes = [
   {
     path: "/tips-main",
     name: "tips-main",
+    meta: { ifAuth: true },
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
@@ -242,6 +262,7 @@ const routes = [
   {
     path: "/tutoriales-main",
     name: "tutoriales-main",
+    meta: { ifAuth: true },
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
@@ -254,6 +275,7 @@ const routes = [
   {
     path: "/modelo-de-clases",
     name: "modelo-de-clases",
+    meta: { ifAuth: true },
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
@@ -267,6 +289,7 @@ const routes = [
   {
     path: "/login-is",
     name: "login-is",
+    meta: { ifAuth: true },
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
@@ -279,6 +302,7 @@ const routes = [
   {
     path: "/password-is",
     name: "password-is",
+    meta: { ifAuth: true },
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
@@ -291,6 +315,7 @@ const routes = [
   {
     path: "/sign-up",
     name: "sign-up",
+    meta: { ifAuth: true },
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
@@ -303,6 +328,7 @@ const routes = [
   {
     path: "/estudiantes-curso",
     name: "estudiantes-curso",
+    meta: { ifAuth: true },
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
@@ -316,6 +342,18 @@ const routes = [
 const router = createRouter({
   history: createWebHashHistory(),
   routes,
+});
+
+router.beforeEach((to, from, next) => {
+  if (to.matched.some((record) => record.meta.ifAuth)) {
+    if (auth.authorized) {
+      next();
+      return;
+    }
+    next("/login");
+  } else {
+    next();
+  }
 });
 
 export default router;

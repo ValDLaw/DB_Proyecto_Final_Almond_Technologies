@@ -21,13 +21,10 @@ class TestsAlmondTecApi(unittest.TestCase):
         self.database_path = 'postgresql://{}@{}/{}'.format('postgres:abc', 'localhost:5432', self.database_name)
 
         setup_db(self.app, self.database_path) #de models.py
-
-        self.permanent_user1 = Usuario(id=202110123, public_id=str(uuid.uuid4()), nombres='Sofía', apellidos='García', rol='E', email='sofia.garcia@utec.edu.pe',
-                            password=generate_password_hash('$ClaveSegura123', method='sha256'))
-        self.permanent_estudiante = Estudiante(id=202110123, nombres='Sofía', apellidos='García')
+        
         if not Usuario.query.filter_by(id=202110123).first():
             self.permanent_user1.insert()
-        if not Estudiante.query.filter_by(id=202110123).first():
+            self.permanent_estudiante = Estudiante(id=202110123, nombres='Sofía', apellidos='García')
             self.permanent_estudiante.insert()
 
         if not Usuario.query.filter_by(id=202110109).first():    
@@ -157,7 +154,7 @@ class TestsAlmondTecApi(unittest.TestCase):
         self.new_password = {
             'id': 202110123,
             'email': 'sofia.garcia@utec.edu.pe',
-            'new_password': '$ClaveSegura321'
+            'new_password': '$ClaveSegura123' #cambiar clave antes de hacerlo
         }
             
     def test_change_password(self):
