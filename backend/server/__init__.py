@@ -286,6 +286,27 @@ def create_app(test_config=None):
             "cursos_inscritos" : [curso.format() for curso in cursos_inscritos],
             "total_cursos_inscritos" : len(cursos_inscritos)
         })
+
+    @app.route("/user/cursos_disponibles", methods=["GET"])
+    @token_required
+    def get_cursos_disponibles(current_user):
+        estudiante = Estudiante.query.filter(Estudiante.id == current_user.id).one_or_none()
+        if estudiante is None:
+            abort(404)
+
+        cursos_estudiante = EstudianteCurso.query.filter_by(estudiante_id = current_user.id)
+        cursos_inscritos =  []
+        cursos_disponibles = []
+        cursos_totales = Curso.query.all()
+        for curso in cursos_estudiante: cursos_inscritos.append(curso.curso_id)
+        for curso in cursos_totales:
+            if curso.id not in cursos_inscritos: cursos_disponibles.append(curso)
+
+        return jsonify({
+            "success" : True,
+            "cursos_disponibles" : [curso.format() for curso in cursos_disponibles],
+            "total_cursos_disponibles" : len(cursos_disponibles)
+        })
     '''
     @app.route("/cursos/<curso_id>", methods=["GET"])
     def get_curso(curso_id):
@@ -299,7 +320,7 @@ def create_app(test_config=None):
         })
     '''
 
-    @app.route("/matricular/<curso_id>", methods = ["POST"])
+    @app.route("/matricular/<curso_id>", methods = ["GET"])
     @token_required
     def create_curso(current_user, curso_id):
         error_404 = False
@@ -310,12 +331,13 @@ def create_app(test_config=None):
                 abort(404)
             
             curso_matriculado = EstudianteCurso(curso_id = curso_id, estudiante_id = current_user.id)
+            curso_info = curso_matriculado.format()
             curso_id = curso_matriculado.insert()
 
             return jsonify({
             "success" : True,
             "curso_matriculado_id" : curso_id,
-            "curso_matriculado" : curso
+            "curso_matriculado" : curso_info
         })
 
         except Exception as e:

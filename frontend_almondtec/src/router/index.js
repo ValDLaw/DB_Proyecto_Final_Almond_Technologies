@@ -43,6 +43,12 @@ const routes = [
       ),
   },
   {
+    path: "/matricular",
+    name: "Matricular",
+    component: () =>
+      import(/* webpackChunkName: "SignUp" */ "../views/site/Matricular.vue"),
+  },
+  {
     path: "/logout",
     name: "Logout",
     props: true,
