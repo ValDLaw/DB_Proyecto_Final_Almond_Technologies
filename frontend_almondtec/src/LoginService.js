@@ -26,9 +26,8 @@ export const auth = reactive({
       router.push({
         name: "User",
       });
-    } else {
-      this.displayNotification(data["message"], "danger");
     }
+    this.displayNotification(data["message"], "danger");
   },
   displayNotification(message, category) {
     this.showNotification = true;

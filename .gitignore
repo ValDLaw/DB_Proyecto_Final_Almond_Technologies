@@ -2,6 +2,7 @@
 node_modules
 /dist
 /virtualenv
+env
 
 # local env files
 .env.local
@@ -21,3 +22,6 @@ pnpm-debug.log*
 *.njsproj
 *.sln
 *.sw?
+backend/__pycache__/models.cpython-310.pyc
+backend/__pycache__/test_api.cpython-310.pyc
+backend/server/__pycache__/__init__.cpython-310.pyc

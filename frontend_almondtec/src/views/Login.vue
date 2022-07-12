@@ -6,6 +6,7 @@
       <input v-model="password" type="password" placeholder="password" /><br />
       <button type="submit">Login</button>
     </form>
+    <router-link to="/password"> ¿Olvidaste tu contraseña? </router-link>
   </div>
 </template>
 

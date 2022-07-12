@@ -148,9 +148,13 @@ Se ve el resultado de una operación exitosa en la terminal.
 
 ## Cómo ejecutar el sistema (Deployment scripts)
 
-Ejecutar la API en Flask:
+Ejecutar la API en Flask (windows):
 ```powershell
-#dentro de la carpeta backend
+python -m venv virtualenv
+virtualenv\Scripts\activate
+pip install -r requirements.txt #sólo la 1ra vez
+
+cd backend #entrar a la carpeta backend
 $env:FLASK_APP = "server"
 $env:FLASK_ENV = "development"
 flask run
@@ -158,7 +162,7 @@ flask run
 
 Ejecutar la página web en Vue:
 ```powershell
-#dentro de la carpeta frontend_almondtec
-npm install #para crear node_modules
+cd frontend_almondtec #entrar a esta carpeta
+npm install #sólo la 1ra vez, para crear node_modules
 yarn serve
 ```

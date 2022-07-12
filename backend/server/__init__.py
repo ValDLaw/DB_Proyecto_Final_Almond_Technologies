@@ -8,9 +8,11 @@ import re
 from flask import (
     Flask,
     abort,
+    flash,
     jsonify,
     request
 )
+from py import code
 from sqlalchemy import null
 
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -98,14 +100,20 @@ def create_app(test_config=None):
         if email is None or password is None: #incompleto
             error_422 = True
             abort(422)
+        
         try:
             #------------AUTENTICACIÓN------------
             user_existe = Usuario.query.filter_by(email=email).first() #revisa si existe el user en la base de datos
             
-            if not user_existe or not check_password_hash(user_existe.password, password):
+            if not user_existe:
                 return jsonify({
                     'success': False,
-                    'message' : 'Datos incorrectos.'
+                    'message' : 'Correo no registrado.'
+                })
+            if not check_password_hash(user_existe.password, password):
+                return jsonify({
+                    'success': False,
+                    'message' : 'Contraseña incorrecta.'
                 })
             
             if user_existe and check_password_hash(user_existe.password, password):
@@ -153,16 +161,16 @@ def create_app(test_config=None):
             if len(str(id)) != 9:
                 flag = True
                 mensaje = 'Código debe tener 9 caracteres.'
-            if email[-12:]!="@utec.edu.pe":
+            elif email[-12:]!="@utec.edu.pe":
                 flag = True
                 mensaje = 'Correo debe tener el formato @utec.edu.pe'
-            if code_existe:
+            elif code_existe:
                 flag = True
                 mensaje = 'Código ya registrado.'
-            if email_existe:
+            elif email_existe:
                 flag = True
                 mensaje = 'Correo ya registrado.'
-            if not password_check(password):
+            elif not password_check(password):
                 flag = True
                 mensaje = 'Contraseña debe tener mínimo de 11 caracteres y al menos una mayúscula, una minúscula, un número y un caracter especial (!#$%&?)' 
             
@@ -179,6 +187,7 @@ def create_app(test_config=None):
 
             return jsonify({
                 'success': True,
+                'message': 'Cuenta creada. Iniciar sesión.',
                 'created': new_id
             })
                     
@@ -187,6 +196,61 @@ def create_app(test_config=None):
                 abort(422)
             print(e)
             abort(500)
+
+    @app.route('/password', methods=['PATCH'])
+    def password():
+        error_422 = False
+        body = request.get_json()
+        id = body.get('id', None)
+        email = body.get('email', None)
+        new_password = body.get('new_password', None)
+        
+        if (id is None
+            or email is None
+            or new_password is None): #incompleto
+            error_422 = True
+            abort(422)
+        try:
+            flag = False
+            code_existe = Usuario.query.filter_by(id=id).first() #si regresa un código -> existe en la base de datos
+            email_existe = Usuario.query.filter_by(email=email).first() #si regresa un email -> existe en la base de datos
+
+            if not code_existe:
+                flag = True
+                mensaje = 'Código no registrado.'
+            elif not email_existe:
+                flag = True
+                mensaje = 'Correo no registrado.'
+            elif code_existe != email_existe:
+                flag = True
+                mensaje = 'El código y el correo no coinciden.'
+            elif check_password_hash(code_existe.password, new_password):
+                flag = True
+                mensaje = 'Ingrese una nueva contraseña.'
+            elif (not password_check(new_password)):
+                flag = True
+                mensaje = 'Contraseña debe tener mínimo de 11 caracteres y al menos una mayúscula, una minúscula, un número y un caracter especial (!#$%&?)' 
+
+            if flag:
+                return jsonify({
+                    'success': False,
+                    'message': mensaje
+                })
+            
+            email_existe.password = generate_password_hash(new_password)
+                
+            return jsonify({
+                'success': True,
+                'message': 'Contraseña cambiada.',
+                'updated_id': code_existe.id,
+            })
+
+        except Exception as e:
+            if error_422:
+                abort(422)
+            print(e)
+            abort(500)
+
     #valeria.espinoza@utec.edu.pe
     @app.route('/user', methods=['GET'])
     @token_required
