@@ -31,6 +31,7 @@
 #entrar a usuario de psql
 CREATE DATABASE almond_tec;
 \c almond_tec
+Se inicializa en el __init__.py los datos
 ```
 
 ## Información acerca de los API. Requests y Responses de cada endpoint utilizado en el sistema.
@@ -39,17 +40,47 @@ CREATE DATABASE almond_tec;
 
 Muestra la información general de la aplicación, con la oportunidad de dar feedback, es decir, lleva a un formulario de Google para recibir sugerencias.
 
-`/login`
+`@app.route('/login', methods=['POST'])`
 
 Permite al usuario iniciar sesión. Se debe pasar la autentificación de datos para poder redirigir al usuario a la ruta user. Si no, aparecen mensajes indicando lo que está mal. 
 
-`/signup`
+`@app.route('/signup', methods=['POST'])`
 
 Ruta para poder crear una cuenta. Recibe los datos del formulario, y si no pasa la validación de datos muestra mensajes de advertencia. En caso todo este correcto, redirige a la persona a la ruta login .
 
+`@app.route('/password', methods=['PATCH'])`
+
+Permite al usuario poder modificar la contraseña en la base de datos si coloca sus datos correctamente.
+
 ### Las siguientes rutas sólo son visibles si se inicia sesión correctamente:
 
-!!!!!
+`@app.route ('/logout', methods=['POST'])`
+
+Permite al usuario cerrar sesión al hacer click en el botón de logout.
+
+`@app.route('/user', methods=['GET'])`
+
+Permite ver el perfil del usuario que ha iniciado sesión.
+
+`@app.route("/user/cursos", methods=["GET"])`
+
+Muestra los cursos en los que el alumno está matriculado.
+
+`@app.route("/user/cursos_disponibles", methods=["GET"])`
+
+Le muestra al alumno los cursos disponibles a los que puede matricularse.
+
+`@app.route("/user/cursos_ensenados", methods=["GET"])`
+
+Muestra los alumnos inscritos en el curso dictado por el docente.
+
+`@app.route("/matricular/<curso_id>", methods = ["GET"])`
+
+Ruta que inscribe al alumno en el curso indicado. Las bases de datos se actualizan.
+
+`@app.route("/abandonar/<curso_id>", methods = ["DELETE"])`
+
+Permite al usuario abandonar el curso y eliminar su inscripción de las bases de datos.
 
 `/tutoriales-main`
 
@@ -128,7 +159,15 @@ Se utilizó JSON Web Token para la autentificación de los datos. Además se uti
 
 ## Manejo de errores HTTP:
 
-Utilizando el código `@app.errorhandler(e)` de Flask, podemos manejar la respuesta que manda el API dependiendo del código de respuesta HTTP. 
+Utilizando el código `@app.errorhandler(e)` de Flask, podemos manejar la respuesta que manda el API dependiendo del código de respuesta HTTP.
+
+```python
+@app.errorhandler(404) #not found
+@app.errorhandler(401) #unauthorized (JWT)
+@app.errorhandler(500) #internal server error
+@app.errorhandler(405) #method not allowed (CORS)
+@app.errorhandler(422) #unprocessable
+```
 
 ### Errores en el Servidor (500)
 
