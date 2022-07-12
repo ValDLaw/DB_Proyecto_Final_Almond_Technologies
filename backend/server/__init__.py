@@ -238,11 +238,12 @@ def create_app(test_config=None):
                 })
             
             email_existe.password = generate_password_hash(new_password)
+            code_existe.update()
                 
             return jsonify({
                 'success': True,
                 'message': 'Contraseña cambiada.',
-                'updated_id': code_existe.id,
+                'updated_id': id,
             })
 
         except Exception as e:
