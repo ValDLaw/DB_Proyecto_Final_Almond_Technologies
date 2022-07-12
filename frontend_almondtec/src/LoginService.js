@@ -5,7 +5,7 @@ export const auth = reactive({
   token: {},
   authorized: false,
   async login(email, password) {
-    const url = "http://127.0.0.1:5002/login";
+    const url = "http://127.0.0.1:5000/login";
     const response = await fetch(url, {
       method: "POST",
       body: JSON.stringify({

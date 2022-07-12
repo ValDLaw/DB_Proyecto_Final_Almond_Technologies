@@ -20,7 +20,7 @@
 <script>
 import Axios from "axios";
 let axios = Axios.create({
-  baseURL: "http://127.0.0.1:5002",
+  baseURL: "http://127.0.0.1:5000",
 });
 export default {
   name: "CursosDetails",
@@ -36,7 +36,7 @@ export default {
   methods: {
     Matricular() {
       axios
-        .get("http://127.0.0.1:5002/user/cursos_disponibles", {
+        .get("http://127.0.0.1:5000/user/cursos_disponibles", {
           headers: { Authorization: localStorage.getItem("token") },
         })
         .then((response) => {
@@ -47,7 +47,7 @@ export default {
     },
     Matricularse(curso_id) {
       axios
-        .get("http://127.0.0.1:5002/matricular/" + curso_id, {
+        .get("http://127.0.0.1:5000/matricular/" + curso_id, {
           headers: {
             Authorization: localStorage.getItem("token"),
           },

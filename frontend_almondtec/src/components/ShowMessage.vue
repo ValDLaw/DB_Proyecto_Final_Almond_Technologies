@@ -20,7 +20,7 @@ export default {
         auth.showNotification = false;
         auth.notificationMessage = "";
         auth.notificationCategory = "";
-      }, 5002);
+      }, 5000);
     },
   },
 };
