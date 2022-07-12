@@ -14,6 +14,13 @@ const routes = [
       import(/* webpackChunkName: "Login" */ "../views/Login.vue"),
   },
   {
+    path: "/password",
+    name: "New_Password",
+    props: true,
+    component: () =>
+      import(/* webpackChunkName: "TodosManager" */ "../views/Password.vue"),
+  },
+  {
     path: "/signup",
     name: "SignUp",
     component: () =>

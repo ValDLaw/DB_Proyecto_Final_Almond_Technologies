@@ -1,13 +1,15 @@
 <template>
   <div>
-    <h1>Sign Up</h1>
-    <form @submit.prevent="signup">
+    <h1>Password</h1>
+    <form @submit.prevent="new_p">
       <input v-model="id" type="number" minlength="9" placeholder="id" /><br />
-      <input v-model="nombres" type="text" placeholder="nombres" /><br />
-      <input v-model="apellidos" type="text" placeholder="apellidos" /><br />
       <input v-model="email" type="email" placeholder="email" /><br />
-      <input v-model="password" type="password" placeholder="password" /><br />
-      <button type="submit">SignUp</button>
+      <input
+        v-model="new_password"
+        type="password"
+        placeholder="password"
+      /><br />
+      <button type="submit">Cambiar Contraseña</button>
     </form>
   </div>
 </template>
@@ -15,28 +17,24 @@
 <script>
 import { auth } from "../LoginService";
 export default {
-  name: "SignUp",
+  name: "New_Password",
   data() {
     console.log("auth: ", auth);
     return {
       id: "",
-      nombres: "",
-      apellidos: "",
       email: "",
-      password: "",
+      new_password: "",
     };
   },
   methods: {
-    async signup() {
-      const url = "http://127.0.0.1:5000/signup";
+    async new_p() {
+      const url = "http://127.0.0.1:5000/password";
       const response = await fetch(url, {
-        method: "POST",
+        method: "PATCH",
         body: JSON.stringify({
           id: this.id,
-          nombres: this.nombres,
-          apellidos: this.apellidos,
           email: this.email,
-          password: this.password,
+          new_password: this.new_password,
         }),
         headers: {
           "Content-Type": "application/json",
@@ -45,12 +43,12 @@ export default {
       console.log("response: ", response);
       const data = await response.json();
       console.log("data: ", data);
-      auth.displayNotification(data["message"], "danger");
       if (data["success"]) {
         this.$router.push({
           name: "Login",
         });
       }
+      auth.displayNotification(data["message"], "danger");
     },
   },
 };

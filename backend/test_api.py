@@ -139,7 +139,31 @@ class TestsAlmondTecApi(unittest.TestCase):
             'curso_id': self.permanent_curso.id,
             'link': 'https://www.youtube.com/channel/UCOmHUn--16B90oW2L6FRR3A'
             }
+
+        self.new_password_user = {
+            'id': 202210567,
+            'nombres': 'María',
+            'apellidos': 'Perez',
+            'email': 'maria.perez@utec.edu.pe',
+            'password': '$ClaveSegura123'
+        }
+
+        self.new_password = {
+            'id': 202110123,
+            'email': 'sofia.garcia@utec.edu.pe',
+            'new_password': '$ClaveSegura321'
+        }
             
+    def test_change_password(self):
+        res = self.client().patch('/password', json=self.new_password)
+        data = json.loads(res.data)
+        #print(data)
+
+        self.assertEqual(data['success'], True)
+        self.assertTrue(data['updated_id'])
+        self.assertTrue(data['message'])
+
+
     def test_user_not_autheticated(self):
         res = self.client().get('/user')
         data = json.loads(res.data)
