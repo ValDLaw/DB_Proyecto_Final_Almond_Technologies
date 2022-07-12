@@ -44,11 +44,39 @@ def password_check(password):
         check = False
     return check
 
+def agregar_datos():
+    if not Usuario.query.filter_by(id=202110123).first():
+        permanent_user1 = Usuario(id=202110123, public_id=str(uuid.uuid4()), nombres='Sofía', apellidos='García', rol='E', email='sofia.garcia@utec.edu.pe',
+                            password=generate_password_hash('$ClaveSegura123', method='sha256'))
+        permanent_user1.insert()
+        permanent_estudiante = Estudiante(id=202110123, nombres='Sofía', apellidos='García')
+        permanent_estudiante.insert()
+
+    if not Usuario.query.filter_by(id=202110109).first():    
+        permanent_user2 = Usuario(id=202110109, public_id=str(uuid.uuid4()), nombres='Valeria', apellidos='Espinoza', rol='E', email='valeria.espinoza@utec.edu.pe',
+                                password=generate_password_hash('$ClaveSegura567', method='sha256'))
+        permanent_user2.insert()
+
+        permanent_estudiante = Estudiante(id=202110109, nombres='Valeria', apellidos='Espinoza')
+        permanent_estudiante.insert()
+
+    if not Usuario.query.filter_by(id=202120567).first():
+        permanent_user3 = Usuario(id=202120567, public_id=str(uuid.uuid4()), nombres='Marvin', apellidos='Abisrror', rol='P', email='m.abisrror@utec.edu.pe',
+                                password=generate_password_hash('$ClaveSegura890', method='sha256'))
+        permanent_user3.insert()
+        permanent_profesor = Profesor(id=202120567, nombres='Marvin', apellidos='Abisrror')
+        permanent_profesor.insert()
+    
+    if not Curso.query.filter_by(id=124).first():
+        permanent_curso = Curso(id=124, nombre='Desarrollo Basado en Plataformas', profesor_id=202120567)
+        permanent_curso.insert()
+
 def create_app(test_config=None):
     app = Flask(__name__)
     database_name = 'almond_tec'
     database_path = 'postgresql://{}@{}/{}'.format('postgres:abc', 'localhost:5432', database_name)
     setup_db(app, database_path)
+    agregar_datos()
 
     #---------------CORS SETUP---------------
 

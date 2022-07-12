@@ -25,3 +25,6 @@ pnpm-debug.log*
 backend/__pycache__/models.cpython-310.pyc
 backend/__pycache__/test_api.cpython-310.pyc
 backend/server/__pycache__/__init__.cpython-310.pyc
+backend/__pycache__/models.cpython-310.pyc
+backend/__pycache__/test_api.cpython-310.pyc
+backend/server/__pycache__/__init__.cpython-310.pyc
