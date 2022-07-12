@@ -258,16 +258,36 @@ def create_app(test_config=None):
     def user(current_user):
         try:
             if current_user.rol == 'E':
-                estudiante = Estudiante.query.filter(Estudiante.id == current_user.id).one_or_none()
-                return jsonify(estudiante.format())
+                current_user = Estudiante.query.filter(Estudiante.id == current_user.id).one_or_none()
+                return jsonify(current_user.format())
             else:
-                profesor = Profesor.query.filter(Profesor.id == current_user.id).one_or_none()
-                return jsonify(profesor.format())
+                current_user = Profesor.query.filter(Profesor.id == current_user.id).one_or_none()
+                return jsonify(current_user.format())
         except Exception as e:
             #print(e)
             abort(500)
 
+    @app.route("/user/cursos", methods=["GET"])
+    @token_required
+    def get_cursos(current_user):
+        estudiante = Estudiante.query.filter(Estudiante.id == current_user.id).one_or_none()
+        if estudiante is None:
+            abort(404)
 
+        cursos_estudiante = EstudianteCurso.query.filter_by(estudiante_id = current_user.id)
+        cursos_inscritos_id =  []
+        for curso in cursos_estudiante: cursos_inscritos_id.append(curso.curso_id)
+        cursos_totales = Curso.query.all()
+        cursos_inscritos =  []
+        for curso in cursos_totales:
+            if curso.id in cursos_inscritos_id: cursos_inscritos.append(curso)
+
+        return jsonify({
+            "success" : True,
+            "cursos_inscritos" : [curso.format() for curso in cursos_inscritos],
+            "total_cursos_inscritos" : len(cursos_inscritos)
+        })
+    '''
     @app.route("/cursos/<curso_id>", methods=["GET"])
     def get_curso(curso_id):
         curso = Curso.query.filter(Curso.id == curso_id).one_or_none()
@@ -278,6 +298,7 @@ def create_app(test_config=None):
             "curso" : curso_id,
             "curso" : curso.format()
         })
+    '''
 
     @app.route("/matricular/<curso_id>", methods = ["POST"])
     @token_required
@@ -309,18 +330,21 @@ def create_app(test_config=None):
     def delete_curso(current_user, curso_id):
         error_404 = False
         try:
+            
             curso = Curso.query.filter(Curso.id == curso_id).one_or_none()
             if curso is None:
                 error_404 = True
                 abort(404)
             
-            curso_abandonado = EstudianteCurso.query.filter(Curso.id == curso_id).one_or_none()
+            curso_abandonado = EstudianteCurso.query.filter(EstudianteCurso.curso_id == curso_id).filter(EstudianteCurso.estudiante_id == current_user.id).one_or_none()
+            print(curso_abandonado.format())
+            curso_info = curso_abandonado.format()
             curso_abandonado.delete()
 
             return jsonify({
             "success" : True,
             "curso_abandonado_id" : curso_id,
-            "curso_abandonado" : curso
+            "curso_abandonado" : curso_info
         })
 
         except Exception as e:
@@ -330,16 +354,19 @@ def create_app(test_config=None):
             abort(500)
 
     #---------- EXTRAS ---------
-    @app.route("/extras", methods=["GET"])
-    def get_extras():
-        extras = Extra.query.all()
+    @app.route("/cursos/<curso_id>", methods=["GET"])
+    def get_extras(curso_id):
+        extras = Extra.query.filter(Extra.curso_id == curso_id).all()
+        curso = Curso.query.filter(Curso.id == curso_id).one_or_none()
         return jsonify({
             "success" : True,
-            "extras" : [extra.JSONSerialize() for extra in extras],
-            "total_extras" : len(extras)
+            "extras" : [extra.format() for extra in extras],
+            "total_extras" : len(extras),
+            "curso_nombre": curso.nombre,
         })
 
     @app.route("/extras/<extra_nombre>", methods=["GET"])
+    @token_required
     def get_extra(extra_nombre):
         extra = Extra.query.filter(Extra.nombre == extra_nombre).one_or_none()
         if extra is None:
@@ -350,6 +377,7 @@ def create_app(test_config=None):
         })
 
     @app.route("/cursos/<curso_id>/extras", methods=["POST"])
+    @token_required
     def create_extra(curso_id):
         curso = Curso.query.filter(Curso.id == curso_id).one_or_none()
 
@@ -371,6 +399,7 @@ def create_app(test_config=None):
         })
 
     @app.route("/extras/<extra_nombre>", methods = ["PATCH"])
+    @token_required
     def update_extra(extra_nombre):
         extra = Extra.query.filter(Extra.nombre == extra_nombre).one_or_none()
 
@@ -390,6 +419,7 @@ def create_app(test_config=None):
         })
 
     @app.route("/extras/<extra_nombre>", methods = ["DELETE"])
+    @token_required
     def delete_extra(extra_nombre):
         extra = Extra.query.filter(Extra.nombre == extra_nombre).one_or_none()
 

@@ -1,57 +1,73 @@
 <template>
   <div>
     <section>
-      <h1>{{ curso.name }}</h1>
+      <h1>{{ extras?.curso_nombre }}</h1>
       <div class="todo-details">
-        {{ curso.nombre }}
-      </div>
-    </section>
-    <section class="extras">
-      <h2>Top extras in {{ curso.nombre }}</h2>
-      <div class="cards">
-        <div v-for="extra in curso.extras" :key="extra.tema" class="card">
-          <router-link
-            :to="{
-              name: 'ExtraDetails',
-              params: { evidenceSlug: evidence.slug },
-            }"
+        <div v-for="extra in extras?.extras" :key="extra.nombre">
+          {{ extra.nombre }}
+          {{ extra.tema }}
+          <a
+            href="https://www.youtube.com/playlist?list=PLlM0tKd2OBZWEswsYYOVFBteewbC8htFK"
           >
-            <img
-              :src="require(`@/assets/${evidence.image}`)"
-              :alt="evidence.name"
-            />
-            <span class="card__text">
-              {{ evidence.name }}
-            </span>
-          </router-link>
+            <span class="button is-link modal-button" data-target="modal-image2"
+              >Ver tutoriales</span
+            >
+          </a>
+        </div>
+        <div>
+          <button @click="Abandonar">Abandonar el curso</button>
         </div>
       </div>
-      <router-view />
     </section>
   </div>
 </template>
 
 <script>
+const { default: axios } = require("axios");
 export default {
   name: "CursosDetails",
   data() {
-    return {};
+    return {
+      extras: null,
+    };
   },
   props: {
-    slug: {
+    curso_id: {
       type: String,
       required: true,
     },
   },
-  computed: {
-    cursos() {
-      return {}; //db.cursos.find((c) => c.id === this.slug);
+  mounted() {
+    this.getExtras();
+  },
+  methods: {
+    getExtras() {
+      axios
+        .get("http://127.0.0.1:5002/cursos/" + this.curso_id, {
+          headers: { Authorization: localStorage.getItem("token") },
+        })
+        .then((response) => {
+          this.extras = response.data;
+          console.log(this.extras);
+        })
+        .catch((e) => console.log(e));
+    },
+    async Abandonar() {
+      await axios
+        .delete("http://127.0.0.1:5002/abandonar/" + this.curso_id, {
+          headers: { Authorization: localStorage.getItem("token") },
+        })
+        .then((response) => {
+          this.extras = response.data;
+          console.log(this.extras);
+          this.$router.push("/user");
+        })
+        .catch((e) => console.log(e));
     },
   },
   beforeCreate() {},
   created() {},
   beforeMount() {},
-  mounted() {},
   beforeUpdate() {},
   updated() {},
   beforeUnmount() {},
