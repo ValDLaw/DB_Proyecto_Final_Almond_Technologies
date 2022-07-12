@@ -43,7 +43,7 @@ export default {
   methods: {
     getExtras() {
       axios
-        .get("http://127.0.0.1:5002/cursos/" + this.curso_id, {
+        .get("http://127.0.0.1:5000/cursos/" + this.curso_id, {
           headers: { Authorization: localStorage.getItem("token") },
         })
         .then((response) => {
@@ -54,7 +54,7 @@ export default {
     },
     async Abandonar() {
       await axios
-        .delete("http://127.0.0.1:5002/abandonar/" + this.curso_id, {
+        .delete("http://127.0.0.1:5000/abandonar/" + this.curso_id, {
           headers: { Authorization: localStorage.getItem("token") },
         })
         .then((response) => {

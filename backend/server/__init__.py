@@ -435,7 +435,7 @@ def create_app(test_config=None):
     def get_extra(extra_nombre):
         extra = Extra.query.filter(Extra.nombre == extra_nombre).one_or_none()
         if extra is None:
-            abort(404, description="No se ha encontrado el extra.")
+            abort(404)
         return jsonify({
             "success" : True,
             "extra" : extra.format()

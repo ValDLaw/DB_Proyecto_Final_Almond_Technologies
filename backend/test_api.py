@@ -49,6 +49,10 @@ class TestsAlmondTecApi(unittest.TestCase):
         if not Curso.query.filter_by(id=124).first():
             self.permanent_curso.insert()
 
+        self.permanent_extra = Extra(nombre='Kahoot_FLASK', tema='FLASK', curso_id=124, link='https://www.youtube.com/channel/UCOmHUn--16B90oW2L6FRR3A')
+        if not Extra.query.filter_by(nombre='Kahoot_FLASK').first():
+            self.permanent_extra.insert()
+
         self.good_user = {
             'id': 202110123,
             'nombres': 'Sofía',
@@ -309,91 +313,6 @@ class TestsAlmondTecApi(unittest.TestCase):
         #print(data)
 
         self.assertEqual(res.status_code, 422)
-        self.assertEqual(data['success'], False)
-        self.assertTrue(data['message'])
-
-    def test_extras_get_success(self):
-        res = self.client().get("/extras")
-        data = res.get_json()
-        self.assertEqual(res.status_code, 200)
-        self.assertTrue(data.get("success"))
-        extras = data.get("extras")
-        if len(extras) > 0:
-            self.assertTrue(extras)
-            self.assertEqual(len(extras), data.get("total_extras"))
-            self.assertGreater(len(extras), 0)
-        else:
-            self.assertFalse(extras)
-            self.assertEqual(len(extras), data.get("total_extras"))
-            self.assertEqual(len(extras), 0)
-
-    def test_comment_extra_failure(self):
-        res = self.client().get("/extras/'no existe'")
-        data = res.get_json()
-
-        self.assertEqual(res.status_code,404)
-        self.assertFalse(data.get("success"))
-        self.assertEqual(data.get("message"), "not found")
-
-    def test_extra_post_success(self):
-        #json = {"curso_id": self.permanent_curso.id, "nombre":"This extra is a try", "link": "https://www.youtube.com/channel/UCOmHUn--16B90oW2L6FRR3A", "tema": "BLACKPINK"}
-        res = self.client().post("/cursos/" + str(self.permanent_curso.id) + "/extras", json=self.new_extra)
-        data = res.get_json()
-        #print(data)
-        self.assertEqual(res.status_code, 200)
-        self.assertTrue(data.get("success"))
-        self.assertTrue(data.get("extra_nombre"))
-        
-    def test_extra_post_failure(self):
-        res = self.client().post("/cursos/-12312123/extras", json = {})
-        data = res.get_json()
-
-        self.assertEqual(res.status_code, 404)
-        self.assertFalse(data.get("success"))
-        self.assertEqual(data.get("message"),"not found")
-
-    def test_extra_update_success(self):
-        # Create an extra for testing purposes
-        self.client().post("/cursos/" + str(self.permanent_curso.id) + "/extras", json=self.new_extra)
-
-        res = self.client().patch("/extras/"+str(self.new_extra['nombre']), json={"link":"https://www.youtube.com/c/LilifilmOfficial_BLACKPINK"})
-        data = res.get_json()
-
-        self.assertEqual(res.status_code, 200)
-        self.assertTrue(data.get("extra_nombre"))
-
-    def test_extra_update_failure(self):
-        res = self.client().patch("extras/'no existe'")
-        data = res.get_json()
-
-        self.assertEqual(res.status_code, 404)
-        self.assertFalse(data.get("success"))
-        self.assertEqual(data.get("message"), "not found")
-        
-    def test_extra_delete_success(self):
-        # Create a comment for testing purposes
-        self.client().post("/cursos/" + str(self.permanent_curso.id) + "/extras", json=self.new_extra)
-
-        res = self.client().delete("/extras/"+ str(self.new_extra['nombre']))
-        data = res.get_json()
-        
-        self.assertEqual(res.status_code, 200)
-        self.assertTrue(data.get("extra_nombre"))
-
-    def test_extra_delete_failure(self):
-        res = self.client().delete("/extras/'no existe'")
-        data = res.get_json()
-
-        self.assertEqual(res.status_code,404)
-        self.assertFalse(data.get("success"))
-        self.assertEqual(data.get("message"), "not found")
-    
-    def test_logout(self):
-        res = self.client().post('/logout')
-        data = json.loads(res.data)
-        #print(data)
-
-        self.assertEqual(res.status_code, 200)
         self.assertEqual(data['success'], False)
         self.assertTrue(data['message'])
 

@@ -69,7 +69,7 @@ export default {
   methods: {
     getUser() {
       axios
-        .get("http://127.0.0.1:5002/user", {
+        .get("http://127.0.0.1:5000/user", {
           headers: { Authorization: localStorage.getItem("token") },
         })
         .then((response) => {
@@ -80,7 +80,7 @@ export default {
     },
     getCursosInscritos() {
       axios
-        .get("http://127.0.0.1:5002/user/cursos", {
+        .get("http://127.0.0.1:5000/user/cursos", {
           headers: { Authorization: localStorage.getItem("token") },
         })
         .then((responses) => {
@@ -92,7 +92,7 @@ export default {
     },
     getCursosEnsenados() {
       axios
-        .get("http://127.0.0.1:5002/user/cursos_ensenados", {
+        .get("http://127.0.0.1:5000/user/cursos_ensenados", {
           headers: { Authorization: localStorage.getItem("token") },
         })
         .then((responses) => {
