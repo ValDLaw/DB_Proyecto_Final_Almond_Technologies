@@ -22,11 +22,12 @@ class TestsAlmondTecApi(unittest.TestCase):
 
         setup_db(self.app, self.database_path) #de models.py
 
-        if not Usuario.query.filter_by(id=202110123).first():
-            self.permanent_user1 = Usuario(id=202110123, public_id=str(uuid.uuid4()), nombres='Sofía', apellidos='García', rol='E', email='sofia.garcia@utec.edu.pe',
+        self.permanent_user1 = Usuario(id=202110123, public_id=str(uuid.uuid4()), nombres='Sofía', apellidos='García', rol='E', email='sofia.garcia@utec.edu.pe',
                             password=generate_password_hash('$ClaveSegura123', method='sha256'))
+        self.permanent_estudiante = Estudiante(id=202110123, nombres='Sofía', apellidos='García')
+        if not Usuario.query.filter_by(id=202110123).first():
             self.permanent_user1.insert()
-            self.permanent_estudiante = Estudiante(id=202110123, nombres='Sofía', apellidos='García')
+        if not Estudiante.query.filter_by(id=202110123).first():
             self.permanent_estudiante.insert()
 
         if not Usuario.query.filter_by(id=202110109).first():    
@@ -43,8 +44,9 @@ class TestsAlmondTecApi(unittest.TestCase):
             self.permanent_user3.insert()
             self.permanent_profesor = Profesor(id=202120567, nombres='Marvin', apellidos='Abisrror')
             self.permanent_profesor.insert()
+        
+        self.permanent_curso = Curso(id=124, nombre='Desarrollo Basado en Plataformas', profesor_id=202120567)
         if not Curso.query.filter_by(id=124).first():
-            self.permanent_curso = Curso(id=124, nombre='Desarrollo Basado en Plataformas', profesor_id=202120567)
             self.permanent_curso.insert()
 
         self.good_user = {
