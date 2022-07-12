@@ -276,6 +276,18 @@ const routes = [
         /* webpackChunkName: "about" */ "../views/inicio-sesion/sign-up.vue"
       ),
   },
+  //estudiantes-curso
+  {
+    path: "/estudiantes-curso",
+    name: "estudiantes-curso",
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () =>
+      import(
+        /* webpackChunkName: "about" */ "../views/inicio-sesion/estudiantes-curso.vue"
+      ),
+  },
 ];
 
 const router = createRouter({

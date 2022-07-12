@@ -2,6 +2,7 @@
 node_modules
 /dist
 /virtualenv
+env
 
 # local env files
 .env.local
