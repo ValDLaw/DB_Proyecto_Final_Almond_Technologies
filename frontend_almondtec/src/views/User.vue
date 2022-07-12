@@ -11,7 +11,7 @@
     </div>
     <div class="box2" v-if="datos?.rol == 'estudiante'">
       <h1>Cursos inscritos</h1>
-      <section class="evidences">
+      <section class="cursos">
         <h2>Usted está inscrito en los siguientes cursos</h2>
         <div v-for="curso in cursos?.cursos_inscritos" :key="curso.id">
           <router-link
@@ -32,6 +32,19 @@
       </section>
       <p>Total:{{ cursos?.total_cursos_inscritos }}</p>
     </div>
+    <div class="box2" v-if="datos?.rol == 'profesor'">
+      <h1>Cursos enseñados</h1>
+      <section class="cursos">
+        <h2>Usted es profesor de los siguientes cursos</h2>
+        <div
+          v-for="curso in cursos_ensenados?.cursos_ensenados"
+          :key="curso.id"
+        >
+          {{ curso.nombre }}
+        </div>
+      </section>
+      <p>Total:{{ cursos?.total_cursos_ensenados }}</p>
+    </div>
   </div>
   <!-- FIN creacion de botones para cursos -->
 </template>
@@ -45,6 +58,7 @@ export default {
       datos: null,
       cursos: null,
       cursos_i: [],
+      cursos_ensenados: [],
     };
   },
   mounted() {
@@ -78,13 +92,12 @@ export default {
     },
     getCursosEnsenados() {
       axios
-        .get("http://127.0.0.1:5002/user/cursos", {
+        .get("http://127.0.0.1:5002/user/cursos_ensenados", {
           headers: { Authorization: localStorage.getItem("token") },
         })
         .then((responses) => {
-          this.cursos = responses.data;
-          this.cursos_i = responses.data.cursos_inscritos;
-          console.log(this.cursos_i);
+          this.cursos_ensenados = responses.data;
+          console.log(this.cursos_ensenados);
         })
         .catch((e) => console.log(e));
     },

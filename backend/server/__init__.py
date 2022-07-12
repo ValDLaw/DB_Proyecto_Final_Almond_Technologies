@@ -336,6 +336,21 @@ def create_app(test_config=None):
             "cursos_disponibles" : [curso.format() for curso in cursos_disponibles],
             "total_cursos_disponibles" : len(cursos_disponibles)
         })
+
+    @app.route("/user/cursos_ensenados", methods=["GET"])
+    @token_required
+    def get_cursos_ensenados(current_user):
+        profesor = Profesor.query.filter(Profesor.id == current_user.id).one_or_none()
+        if profesor is None:
+            abort(404)
+
+        cursos_ensenados = Curso.query.filter(Curso.profesor_id == current_user.id).all()
+
+        return jsonify({
+            "success" : True,
+            "cursos_ensenados" : [curso.format() for curso in cursos_ensenados],
+            "total_cursos_ensenados" : len(cursos_ensenados)
+        })
     '''
     @app.route("/cursos/<curso_id>", methods=["GET"])
     def get_curso(curso_id):
